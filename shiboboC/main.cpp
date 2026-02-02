@@ -7,7 +7,7 @@
 #include <cstdio>
 #include "TagList.h"
 #include "NameTag.h"
-using namespace seneca;
+using namespace shibobo;
 int noOfNames(FILE* fptr) {
    char ch;
    int recs = 0;
