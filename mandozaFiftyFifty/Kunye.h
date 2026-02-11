@@ -1,4 +1,5 @@
 // try g++ -Wall -std=c++11 -g -o out *.cpp
+// for eductational and testing purposes only
 
 #ifndef MANDOZA_ACCOUNT_H_
 #define MANDOZA_ACCOUNT_H_
