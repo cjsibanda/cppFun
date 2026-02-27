@@ -41,26 +41,7 @@ namespace sibanda {
       return count;
    }
 
-   bool Numbers::load() {
-      if (m_numCount <= 0) return false;
-
-      m_numbers = new double[m_numCount];
-      ifstream file(m_filename);
-
-      int i = 0;
-      while (i < m_numCount && file >> m_numbers[i])
-         i++;
-
-      if (i != m_numCount) {
-         delete[] m_numbers;
-         m_numbers = nullptr;
-         m_numCount = 0;
-         return false;
-      }
-      sort();
-      return true;
-   }
-
+   
    void Numbers::save() const {
       if (!m_isOriginal || isEmpty()) return;
 
@@ -84,24 +65,20 @@ namespace sibanda {
       }
    }
 
-   void Numbers::sort() {
-      for (int i = 0; i < m_numCount - 1; i++) {
-         for (int j = i + 1; j < m_numCount; j++) {
-            if (m_numbers[i] > m_numbers[j]) {
-               double t = m_numbers[i];
-               m_numbers[i] = m_numbers[j];
-               m_numbers[j] = t;
-            }
-         }
-      }
-   }
+   //managing resources
+   // realloc or malloc/calloc (or just ne or delete) for dynamically resizing
 
+   // set object to safe empty state
+
+   //Copy Constructor?
    Numbers::Numbers(const Numbers& other) {
       setEmpty();
+      //set the object NOT to be the original
       m_isOriginal = false;
       *this = other;
    }
-
+ 
+   //Copy Assignment operator?
    Numbers& Numbers::operator=(const Numbers& other) {
       if (this != &other) {
 
@@ -132,6 +109,47 @@ namespace sibanda {
       delete[] m_filename;
    }
 
+   // load
+   bool Numbers::load() {
+      //check if number is less than 0
+      if (m_numCount <= 0) return false;
+
+      m_numbers = new double[m_numCount];
+      ifstream file(m_filename);
+
+      int i = 0;
+
+      // while the ifstream has not failed, keep reading double values
+      // from file 
+
+      while (i < m_numCount && file >> m_numbers[i])
+         i++;
+
+      // if number of doubles read, is not equal to the m_numCount
+      if (i != m_numCount) {
+         delete[] m_numbers;
+         m_numbers = nullptr;
+         m_numCount = 0;
+         return false;
+      }
+      sort();
+      //return success status
+      return true;
+   }
+
+
+   void Numbers::sort() {
+      for (int i = 0; i < m_numCount - 1; i++) {
+         for (int j = i + 1; j < m_numCount; j++) {
+            if (m_numbers[i] > m_numbers[j]) {
+               double t = m_numbers[i];
+               m_numbers[i] = m_numbers[j];
+               m_numbers[j] = t;
+            }
+         }
+      }
+   }
+
    double Numbers::max() const {
       double m = m_numbers[0];
       for (int i = 1; i < m_numCount; i++)
@@ -153,13 +171,16 @@ namespace sibanda {
       return sum / m_numCount;
    }
 
+   // overload += operator to add a single double value to list of numbers
+
    Numbers& Numbers::operator+=(double value) {
       if (!isEmpty()) {
          double* temp = new double[m_numCount + 1];
 
          for (int i = 0; i < m_numCount; i++)
             temp[i] = m_numbers[i];
-
+         // need to increase the size of the allocated memory by one
+         // create a temporary local double pointer and allocate memory
          temp[m_numCount++] = value;
 
          delete[] m_numbers;
