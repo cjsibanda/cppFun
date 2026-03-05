@@ -2,7 +2,7 @@
 #define SIBANDA_STATS_H_
 #include <iostream>
 
-//11
+//11 (Resource managemnet - copy constuctor/copy assignment operator)
 
 namespace sibanda {
    class Stats {
