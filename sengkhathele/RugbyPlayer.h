@@ -2,6 +2,8 @@
 #define SPRINGBOKS_PLAYER_H_
 #include <iostream>
 namespace springboks {
+  //12 (derived classes)
+
     //Base class
     class RugbyPlayer {
         //private is assumed for class
