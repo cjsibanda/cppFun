@@ -9,7 +9,7 @@ int main() {
     
     //Loaned Player (DMA)
     int loanSpells[] = {6, 12, 5};
-    LoanedPlayer youngster(56, "Benjani", "Mwaruwari", 3, loanSpells);
+    LoanedPlayer youngster(5, "Xavi", "Alonso", 3, loanSpells);
 
     std::cout << "Diplaying Players:" << std::endl;
     captain.display();
