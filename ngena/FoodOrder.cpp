@@ -1,41 +1,85 @@
+#include <iostream>
+#include <iomanip>
 #include <cstring>
+#include <string>
 #include "FoodOrder.h"
 using namespace std;
 
+double g_taxRate = 0;
+double g_dailydiscount = 0;
 
-FoodOrder::FoodOrder() {
-   return *this; //this&that = 0; ??
-}
+namespace sibanda 
+{
+  void FoodOrder::read(istream& is)
+  {
+    if (is)
+    {
+      is.getline(m_customerName, 10, ',');
 
+      if (m_orderDesc)
+        delete[] m_orderDesc;
 
-/*
---> to be continued
+      string buffer;
+      getLine(is, buffer, ',');
 
-*/
+      m_orderDesc = new char[buffer.length() + 1];
+      strcpy(m_orderDesc, buffer.c_str());
 
-/*
-read(): a modifier that recieces an istream reference
-*/
-void FoodOrder::read(istream& is) {
-  string m_name;  //will hold the Customer name
-  string m_description;  //will hold the order desccription
-  double m_price; //will hold the price
+      is >> m_price;
+      char tmp{ 'N' };
+      is.ignore();
+      is >> tmp;
+      tmp == 'N' ? m_dailyspecial = false : m_dailyspecial = true;
+    }
+  }
 
-  cout  << "Customer Name : ";
-  is >> m_name;
-  cout << "Order Description : ";
-  is >> m_description;
-  cout << " Price" ;
-  is >> m_price;
-  // some logic here
-  // do that
+  void FoodOrder::display() const
+  {
+    static size_t numOrders = 0;
+    cout << left << setw(2) << ++numOrders << ". ";
+    if (m_customerName[0])
+    {
+      double priceTaxed = m_price +(m_price * g_taxRate);
+      cout << setw(10) << m_customerName << "|"
+           << setw(25) << m_orderDesc << "|"
+           << fixed << setw(12) << setprecision(2) << priceTaxed << "|";
+      if (m_dailyspecial)
+         cout << right << setprecision(2) << setw(13) << priceTaxed - g_dailydiscount;
+    }
+    else
+      cout << "No order";
+    cout << endl;
+  }
 
-  //construct a temporary Food Order
-  //FoodOrder temp(name, description, price);
-  // if the data is valid, the temporary object into the current object
-  // do that here...
-}
+  FoodORder::~FoodOrder()
+  {
+    delete [] m_orderDesc;
+  }
 
-void FoodOrder::display(ostream& os) const {
-  //logic here
+  FoodOrder::FoodOrder(const FoodOrder& src)
+  {
+    *this = src;
+  }
+
+  FoodOrder& FoodOrder::operator=(const FoodOrder& src)
+  {
+    if (this != &src)
+    {
+      delete [] m_orderDesc;
+      m_orderDesc = nullptr;
+
+      //Shallow copy
+      strcpy(m_customerName, src.m_customerName);
+      m_price = src.m_price;
+      m_dailyspecial = src.m_dailyspecial;
+
+      //Deep copy
+      if(src.m_orderDesc)
+      {
+        m_orderDesc = new char [strlen(src.m_orderDesc) + 1];
+        strcpy(m_orderDesc, src.m_orderDesc);
+      }
+    }
+    return *this;
+  }
 }
