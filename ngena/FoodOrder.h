@@ -11,7 +11,7 @@ namespace sibanda {
 
 class FoodOrder {
     char m_name[10];
-    char* m_length{};  
+    char* m_orderDesc{}; 
     double m_price{};
     bool isSpecial{};       
   public:

@@ -29,7 +29,7 @@ namespace sibanda
       char tmp{ 'N' };
       is.ignore();
       is >> tmp;
-      tmp == 'N' ? m_dailyspecial = false : m_dailyspecial = true;
+      tmp == 'N' ? isSpecial = false : isSpecial = true;
     }
   }
 
@@ -37,13 +37,13 @@ namespace sibanda
   {
     static size_t numOrders = 0;
     cout << left << setw(2) << ++numOrders << ". ";
-    if (m_customerName[0])
+    if (m_name[0])
     {
       double priceTaxed = m_price +(m_price * g_taxRate);
-      cout << setw(10) << m_customerName << "|"
+      cout << setw(10) << m_name << "|"
            << setw(25) << m_orderDesc << "|"
            << fixed << setw(12) << setprecision(2) << priceTaxed << "|";
-      if (m_dailyspecial)
+      if (isSpecial)
          cout << right << setprecision(2) << setw(13) << priceTaxed - g_dailydiscount;
     }
     else
@@ -69,9 +69,9 @@ namespace sibanda
       m_orderDesc = nullptr;
 
       //Shallow copy
-      strcpy(m_customerName, src.m_customerName);
+      strcpy(m_name, src.m_name);
       m_price = src.m_price;
-      m_dailyspecial = src.m_dailyspecial;
+      isSpecial = src.isSpecial;
 
       //Deep copy
       if(src.m_orderDesc)
