@@ -51,7 +51,7 @@ namespace sibanda
     cout << endl;
   }
 
-  FoodORder::~FoodOrder()
+  FoodOrder::~FoodOrder()
   {
     delete [] m_orderDesc;
   }

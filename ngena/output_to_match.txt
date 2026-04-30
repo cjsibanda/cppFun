@@ -15,6 +15,7 @@ Name          |Order Description        |Price w/Tax |Special Price
 3 . Thomas    |BLT Sandwich             |8.58        |
 4 . Sarah     |Soup and Salad Combo     |7.90        |         6.75
 5 . Lisa      |Noodle Dumpling Soup     |6.77        |
+6 . CJ        |Orange Chicken Combo     |12.99       |         5.25
 --------------------
     Day 2
 --------------------
