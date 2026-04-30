@@ -3,11 +3,9 @@
 -Move and Copy Semantics: Protein Sequence
 -Copy Semantics for a class with resource
 -Move semantics for a class with a resource
--std::chrono
---> Question: Why is there big difference between copy and move ops
+-used std::chrono
+--> Understand why there is a difference between copy and move ops
 */
-////// FIX //////////////
-
 #include <iostream>
 #include <iomanip>
 #include <utility>
@@ -19,7 +17,7 @@
 
 //check if header guards exist and follow convention
 #ifndef SIBANDA_PROTEINTDATABASE_H
-   #error "Header guard from 'ProteinDatabase.h' doesn't follow the conventions!"
+   #error "The Header guard from 'ProteinDatabase.h' doesn't follow the convention!"
 #endif
 #ifndef SIBANDA_TIMEDTASK_H
    #error "The header guard for 'TimedTask.h' doesn't follow the convention!"
@@ -32,7 +30,7 @@ enum ExitCode
     ERROR_TOO_MANY_ARGUMENTS,
 };
 
-int cout = ExitCode::SUCCESS; //won't compile if headers don't follow conventions
+int cout = ExitCode::SUCCESS; //won't compile if headers don't follow convention
 
 using ArrayOf5_t = size_t[5];
 
@@ -61,7 +59,7 @@ int main(int argc, char** argv)
 
     if (argc == 1)
     {
-        std::cerr << "ERROR: Missing file name!\n";
+        std::cerr << "ERROR: File name missing!\n";
         return ExitCode::ERROR_NO_INPUT_FILE;
     }
     else if (argc != 2)
@@ -111,7 +109,7 @@ int main(int argc, char** argv)
 		t.startClock();
 		protein_DBA = protein_DBB;
 		t.stopClock();
-		t.addTask("  Copy Assignment");
+		t.addTask("  Copy Assignment ");
 		std::cout << "  Copy Assignment   - protein_DBA.size = "
 			<< std::setw(7) << protein_DBA.size() << " Proteins -> \n";
 		printDatabase("(a)", protein_DBA, { 0u, 99u, 999u, protein_DBA.size() - 1u, protein_DBA.size() });
@@ -124,7 +122,7 @@ int main(int argc, char** argv)
 		t.startClock();
 		sibanda::ProteinDatabase protein_DBD = std::move(protein_DBA);
 		t.stopClock();
-		t.addTask("  Move Constructor");
+		t.addTask("  Move Constructor ");
 		std::cout << "  Move Constructor  - protein_DBD.size = "
 			<< std::setw(7) << protein_DBD.size() << " Proteins -> \n";
 		printDatabase("(a)", protein_DBA, { 0u, 99u, 999u, 23011u, 23012u });
@@ -141,7 +139,7 @@ int main(int argc, char** argv)
 		t.startClock();
 		protein_DBA = std::move(protein_DBD);
 		t.stopClock();
-		t.addTask("  Move Assignment");
+		t.addTask("  Move Assignment ");
 		std::cout << "  Move Assignment   - protein_DBA.size = "
 		          << std::setw(7) << protein_DBA.size() << " Proteins -> \n";
 		printDatabase("(a)", protein_DBA, { 0u, 99u, 999u, protein_DBA.size() - 1u, protein_DBA.size() });
@@ -155,7 +153,7 @@ int main(int argc, char** argv)
 		t.startClock();
 	}
 	t.stopClock();
-	t.addTask("  Destructor");
+	t.addTask("  Destructor ");
 
 	std::cout << t;
 
