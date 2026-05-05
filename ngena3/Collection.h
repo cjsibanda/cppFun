@@ -1,5 +1,3 @@
-//lifted --> updated
-//MIT???
 // template classes
 // specializing a templated class variable for a particular type
 //
