@@ -16,10 +16,13 @@ namespace sibanda
         std::string m_key{};
         std::string m_value{};
     public:
-        /*
-        To be continued...
-        // prototypes
-        */
+        const std::string& getKey() {return m_key; }
+        const std::string& getValue() {return m_value; }
+        Pair(const std::string& key, const std::string& value) : m_key{ key }, m_value{ value}{};
+        Pair() = default;
+        bool operator==(const Pair& other);
+        friend std::ostream& operator<<(std::ostream& out, const Pair& item);
+        
     };
 }
 #endif
