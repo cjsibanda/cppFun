@@ -1,0 +1,29 @@
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+-> read function is tricky, need to work on that
+
+NOTES/IMPORTANT CONCEPTS
+///////////////////////////////////////////////////////
+//- INTERNAL VS EXTERNAL LINKAGE
+///////////////////////////////////////////////////////
+EXTERNAL LINKAGE: means a variable or function can be
+accessed across differrent translation units or files.
+In this code g_taxrate and g_dailydiscount have external LINKAGE
+They are defined in foodOrder.cpp and made accessible to tester_1.cpp
+using the extern keyword in the header.
+
+INTERNAL LINKAGE: This limits the scope of the variable or 
+ function to the file where it is defined. while not explicitly
+ forced with the static keyword on globals in this solution.
+
+/////////////////////////////////////////////////////////
+// STATIC VARIABLES
+/////////////////////////////////////////////////////////
+-> Static variable is a varibale that is allocated for
+the lifetime of the program.
+-> an example of Utility in this project is in the display()
+function. static size_t numOrders = 0 is used
+ 
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
