@@ -14,24 +14,43 @@ double g_dailydiscount = 0;
 
 namespace seneca 
 {
+
+    FoodOrder::FoodOrder() {
+        //initializing members to safe empty states
+        m_name[0] = '\0';
+        m_description = nullptr;
+        m_price = 0.0;
+        isSpecial = false;
+    }
+
     void FoodOrder::read(std::istream& is)
     {
-        is.getline(m_name, 10, ',');
+        if (!is) return;
 
-        if (m_description)
-            delete[] m_description;
+    // Read Name
+    is.getline(m_name, 10, ',');
 
-        string buffer;
-        getline(is, buffer, ',');
+    // Cleanup and Read Description
+    delete[] m_description;
+    m_description = nullptr;
 
-        m_description = new char[buffer.length() + 1];
-        strcpy(m_description, buffer.c_str());
+    string buffer;
+    getline(is, buffer, ',');
+    m_description = new char[buffer.length() + 1];
+    strcpy(m_description, buffer.c_str());
 
-        is >> m_price;
-        char tmp{ 'N' };
-        is.ignore();
-        is >> tmp;
-        tmp == 'N' ? isSpecial = false : isSpecial = true;
+    // Read the Price
+    is >> m_price;
+    is.ignore(); // skip the comma after price
+
+    // Reads  Special Status
+    char tmp;
+    is >> tmp;
+    isSpecial = (tmp == 'Y');
+    
+    // clears the trailing newline/extra characters 
+    // the next 'ordertag' read in main() starts fresh
+    is.ignore(1000, '\n');
     }
 
 
