@@ -1,6 +1,11 @@
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 -> read function is tricky, need to work on that
+-> had to edit the tester_1.cpp file to get it to compile.
+// TODO: write the prototype for the main function
+//         to accept command line arguments
+// added this...
+//int main(int argc, char* argv[])
 
 NOTES/IMPORTANT CONCEPTS
 ///////////////////////////////////////////////////////
@@ -23,7 +28,26 @@ INTERNAL LINKAGE: This limits the scope of the variable or
 the lifetime of the program.
 -> an example of Utility in this project is in the display()
 function. static size_t numOrders = 0 is used
- 
+-> it is useful because it 'helps' the counter remember its
+value between function calls without using a global variable.
+This ensures the order numbering continues sequentially even
+when moving from Day 1 to Day 2 or when displaying the recorded
+delivery list.
 
+/////////////////////////////////////////////////////////
+// MEMBERS ADDED FOR MEMORY MANAGEMENT
+/////////////////////////////////////////////////////////
+The 'Rule of 3' is important for managing dynamic 
+m_description. Adding the following members avoids memory leaks
+-> Destructor [~FoodOrder]: To delete[] the dynamic memory
+when an object goes out of scope.
+-> Copy Constructor: does a 'deep copy' of the description
+when an object is initialized from another.
+-> Copy Assignment Operator (operator=): To clean up existing
+memory and perform a deep copy when one object is assigned to
+another.
+-> A "Safe Empty State" logic: It's important to make sure that
+m_description is initialized to nullptr in the constructor so that 
+delete[] (on an empty object) doesn't crash.
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
