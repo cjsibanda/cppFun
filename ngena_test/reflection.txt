@@ -7,6 +7,23 @@
 // added this...
 //int main(int argc, char* argv[])
 
+LOOK INTO STRING RELATED FUNCTIONS:
+//How to make this work?
+1. std::getline
+https://en.cppreference.com/cpp/string/basic_string/getline
+2. std::string::c_str
+https://en.cppreference.com/cpp/string/basic_string/c_str
+3. std::string::length
+https://en.cppreference.com/cpp/string/char_traits/length
+
+ALSO REVIEW INPUT & OUTPUT OPS
+-> How to use stream objects to interact with users and access
+persistent data
+-> Understanding association relationships between classes
+-> Overloading the extraction operator as helper OPS
+-> Iostream, ifstream and ofstream
+
+
 NOTES/IMPORTANT CONCEPTS
 ///////////////////////////////////////////////////////
 //- INTERNAL VS EXTERNAL LINKAGE
