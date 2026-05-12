@@ -140,3 +140,5 @@ namespace seneca
 }
 
 // try g++ -Wall -std=c++17 -g -o out *.cpp
+// with the txt files, don't use .out
+//use 

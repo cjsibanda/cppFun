@@ -27,59 +27,76 @@ int cout = 0; // won't compile if headers don't follow convention regarding name
 //         to accept command line arguments
 int main(int argc, char* argv[])
 {
-	/////////////////////////////////////////////////////
-    // changed this
-	///////////////////////////////////////////////////
 	std::cout << "Command Line:\n";
-    std::cout << "--------------------------\n";
-    // FIXED: Correctly display the arguments starting from 1
-    for (int i = 0; i < argc; ++i) {
-        std::cout << std::setw(3) << std::right << i + 1 << ": " << argv[i] << std::endl;
-    }
-    std::cout << "--------------------------\n\n";
+	std::cout << "--------------------------\n";
+	// TODO: print the command line here, in the format
+	//   1: first argument
+	//   2: second argument
+	//   3: third argument
+	//   ...
 
-    seneca::FoodOrder recordedDeliveryOrders[10]; // Increased size slightly to be safe
-    size_t numDeliveries = 0;
-    seneca::FoodOrder currentOrder;
 
-    for (int day = 1; day < argc; ++day) {
-        if (day == 1) {
-            g_taxrate = 0.13;
-            g_dailydiscount = 1.15;
-        } else {
-            g_taxrate = 0.14;
-            g_dailydiscount = 1.20;
-        }
+	std::cout << "--------------------------\n\n";
 
-        std::cout << "--------------------\n";
-        std::cout << "    Day " << day << '\n';
-        std::cout << "--------------------\n";
-        std::cout << "Name          |Order Description        |Price w/Tax |Special Price" << std::endl;
+	// Keep a record of the In House and Delivery orders separately
+	seneca::FoodOrder recordedDeliveryOrders[6];
+	// Keep a count of how many orders recorded
+	size_t numDeliveries = 0;
 
-        std::ifstream in(argv[day]);
-        if (!in.is_open()) {
-            std::cout << "Cannot open file [" << argv[day] << "]. Ignoring it!\n";
-            continue; 
-        }
+	seneca::FoodOrder currentOrder;
 
-        char ordertag = '\0';
-        while (in) {
-            in >> ordertag;
-            if (in.fail()) break;
-            in.ignore(); // skip comma
+	for (auto day = 1; day < argc; ++day)
+	{
 
-            currentOrder.read(in);
+		// Rates change from day 1 to day 2
+		if (day == 1){
+			g_taxrate = 0.13;
+			g_dailydiscount = 1.15;
+		}
+		else{
+			g_taxrate = 0.14;
+			g_dailydiscount = 1.20;
+		}
 
-            if (ordertag == 'I') {
-                currentOrder.display();
-            } else if (ordertag == 'D') {
-                // Record deliveries and display
-                recordedDeliveryOrders[numDeliveries++] = currentOrder;
-                currentOrder.display();
-            }
-        }
-    }
-	/////////////////////////////////////////
+		// each parameter contains the orders from one day, process each one at a time
+		std::cout << "--------------------\n";
+		std::cout << "    Day " << day << '\n';
+		std::cout << "--------------------\n";
+		std::cout << "Name          |Order Description        |Price w/Tax |Special Price" << std::endl;
+		std::ifstream in(argv[day]);
+		if (in.is_open() == false)
+		{
+			std::cout << "Cannot open file [" << argv[day] << "]. Ignoring it!\n";
+			continue; // go to the next iteration of the loop
+		}
+		char ordertag = '\0';
+
+		// loop through each order in the file
+		while (in) {
+
+				// read in the ordertag
+				in >> ordertag;
+				// skip the delimiter
+				in.ignore();
+
+				// end of the file
+				if (in.fail())
+					break;
+
+				// read in the rest of the data as a FoodOrder
+				currentOrder.read(in);
+
+				// Handle the in house and delivery orders differently
+				if (ordertag == 'I') {
+					seneca::FoodOrder copy = currentOrder;
+					copy.display();
+				}
+				else if (ordertag == 'D'){ // adds the delivery orders to the record
+					recordedDeliveryOrders[numDeliveries++] = currentOrder;
+					currentOrder.display();
+				}
+		}
+	}
 
 	// print the recorded orders
 	std::cout << "--------------------\n";
