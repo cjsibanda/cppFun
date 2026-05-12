@@ -23,6 +23,15 @@ namespace seneca
         isSpecial = false;
     }
 
+    /****************************************************
+    - read modifier receives an istream reference
+    - if istream is in a good state, the function will attempt
+    to read from the istream and store the info read into current object
+    - Format:
+    <Customer Name>,<Order Description>,<Price>,<Daily Special Status>[newline]
+    - the daily special can be of two values: 'Y' and 'N'
+    - review Input/Output Objects
+    **********************************************************/
     void FoodOrder::read(std::istream& is)
     {
         if (!is) return;
@@ -53,7 +62,21 @@ namespace seneca
     is.ignore(1000, '\n');
     }
 
-
+    /*******************************
+    - dispaly(): a query that displays to the screen 
+    the content of a FoodOrder instance
+    - Format:
+    COUNTER. Name          |Order Description        |Price w/Tax |Special Price
+    - if no Customer name has been stored, print:
+     COUNTER. No Order
+    - COUNTER is a left aligned field of size 2
+    - COUNTER holds the number of times this function has been used
+    - NOTE don't use global/member variables to store counter
+    - Name: is left aligned filed of size 10
+    - Order Description: is left aligned field of size 25
+    - Pricew/Tax: is a left aligned field of size 12
+    - Special Price: is right aligned field of size 13  
+    *******************************/ 
     void FoodOrder::display() const
     {
         static size_t numOrders = 0;
