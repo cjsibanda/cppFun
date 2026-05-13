@@ -6,7 +6,6 @@
 #include <string>
 #include <cstring>
 #include "FoodOrder.h"
-
 using namespace std;
 
 double g_taxrate = 0;
@@ -53,9 +52,9 @@ namespace seneca
     is.ignore(); // skip the comma after price
 
     // Reads  Special Status
-    char tmp;
-    is >> tmp;
-    isSpecial = (tmp == 'Y');
+    char special;
+    is >> special;
+    isSpecial = (special == 'Y');
     
     // clears the trailing newline/extra characters 
     // the next 'ordertag' read in main() starts fresh
@@ -140,5 +139,4 @@ namespace seneca
 }
 
 // try g++ -Wall -std=c++17 -g -o out *.cpp
-// with the txt files, don't use .out
-//use 
+//use ./out day1.txt day2.txt
