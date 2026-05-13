@@ -1,0 +1,45 @@
+////////////////////////////////////////////////
+// ALL ABOUT MOVE AND COPY SEMANTICS   /////////
+////////////////////////////////////////////////
+NEED TO KNOW HOW TO:
+-> retrieve records froma .txt file using input stream object
+-> count the number of records in a file
+-> monitor the time spent on a particular task
+-> implement copy sementics for a class with a resource
+-> implement move semantics for a class with a resource
+-> identify the processing-intensive operations in copy and move assignments
+
+
+
+////////////////////////////////////////////
+// TO COMPILE and run try...
+///////////////////////////////////////////////
+g++ -Wall -std=c++11 -g -o out *.cpp
+./out protein-sequences.txt
+
+////////////////////////////////////////////
+// tester_1 Module
+////////////////////////////////////////////
+-> the file is supplied
+-> no changes needed this time
+
+////////////////////////////////////////////
+// TimeTask Module
+///////////////////////////////////////////
+std::chrono documentation here:
+https://en.cppreference.com/cpp/chrono/time_point
+-> ...................
+
+///////////////////////////////////////////////
+//ProteinDatabase Module
+////////////////////////////////////////////////
+-> will manage two dynamically-allocated
+ arrays of elements
+
+
+///////////////////////////////////////////////
+// KEy POINTS /////////////////////////////////
+///////////////////////////////////////////////
+-> Understand the reason for the significant difference
+between the copy and move ops
+-> visual Studio Code minumum system requirements??????
