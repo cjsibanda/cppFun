@@ -54,7 +54,11 @@ namespace seneca
     // Reads  Special Status
     char special;
     is >> special;
-    isSpecial = (special == 'Y');
+    if (special == 'Y') {
+        this->isSpecial = true;
+    } else {
+        this->isSpecial = false;
+    }
     
     // clears the trailing newline/extra characters 
     // the next 'ordertag' read in main() starts fresh
