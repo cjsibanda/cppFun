@@ -20,7 +20,7 @@ namespace seneca
     * https://en.cppreference.com/w/cpp/chrono/duration
     * - The friend insertion op receices a reference to
     * an std::ostream object and a TimedTask object
-    * should record the arrat in the following format:
+    * should record the array in the following format:
     *
     *      Execution Times:
     *      --------------------------
@@ -33,7 +33,7 @@ namespace seneca
     class TimedTask {
         int m_count{ 0 };
         std::chrono::steady_clock::time_point m_startingTime;
-        std::chrono::steady_clock:;time_point m_endingTime;
+        std::chrono::steady_clock::time_point m_endingTime;
         // array of type structure
         struct Task {
             std::string m_name{};
