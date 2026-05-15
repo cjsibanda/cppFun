@@ -9,11 +9,19 @@ namespace seneca {
     * Start the timer
     * void TimedTask::startClock()
     ************************************/
+    void TimedTask::startClock()
+    {
+        m_startingTime = std::chrono::steady_clock::now();
+    }
 
     /***************************************
     * Stop Timer
     * void TimedTask::stopClock()
     ****************************************/
+    void TimedTask::stopClock()
+    {
+        m_endingTime = std::chrono::steady_clock::now();
+    }
 
     /*****************************************
     * Record the event
@@ -23,6 +31,11 @@ namespace seneca {
     * stores into the name attribute the C-style string reveived as parameter
     * void TimedTask::addTask(const char* msg)
     *******************************************/
+    void TimedTask::addTask(const char msg)
+    {
+        /////////////////////////////
+        /////////////////////////////
+    }
 
     /*******************************************************************
     * ->friend insertion op
@@ -42,7 +55,12 @@ namespace seneca {
     * -> the duration should be in a flied of size 13 
     * std::ostream& operator<<(std::ostream& out, const TimedTask& task)
     *******************************************************************/
-    
+    std::ostream& operator<<(std::ostream& out, const TimedTask& task)
+    {
+        /////////////////////////////////////////
+        /////////////////////////////////////////
+    }
+
     /////////////////////////////////////////////////////////////////
     // std::chrono::steady::steady_clock::now() documentation here...
     // https://en.cppreference.com/cpp/chrono/steady_clock/now
