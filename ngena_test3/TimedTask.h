@@ -50,7 +50,7 @@ namespace seneca
         /////////////////////////////////////////////////////
         void addTask(const char*);
         friend std::ostream& operator<<(std::ostream& out, const TimedTask& task);
-    }
+    };
 
 }
 #endif

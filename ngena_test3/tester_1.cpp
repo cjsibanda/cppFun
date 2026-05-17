@@ -164,3 +164,5 @@ int main(int argc, char** argv)
 
 	return cout;
 }
+
+// try g++ -Wall -std=c++11 -g -o out *.cpp

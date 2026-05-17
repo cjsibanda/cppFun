@@ -34,7 +34,7 @@ namespace seneca {
     void TimedTask::addTask(const char* msg)
     {
         auto ms = std::chrono::duration_cast<std::chrono::nanoseconds>(m_endingTime - m_startingTime );
-        if (m_cnt < MAX_EVENTS)
+        if (m_count < MAX_EVENTS)
         {
             this->m_events[m_cnt].m_description = msg;
             this->m_events[m_cnt].m_unitOfTime = "nanoseconds";
@@ -68,7 +68,7 @@ namespace seneca {
         out << "------------------------\n";
         out << "Execution Times:\n";
         out << "-------------------------\n";
-        for (int i = 0; i < task.m_cnt; i++)
+        for (int i = 0; i < task.m_count; i++)
               out << std::setw(21) << std::left
                 << task.m_events[i].m_name << ' ' << std::setw(13) << std::right
                 << task.m_events[i].m_durationOfTime.count() << ' '
