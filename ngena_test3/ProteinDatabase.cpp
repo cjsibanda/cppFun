@@ -10,7 +10,7 @@
 namespace seneca
 {
     
-    ProteinDatabase::ProteinDatabase() : m_proteinSequences(nullptr), m_cnt(0) {}
+    ProteinDatabase::ProteinDatabase() : m_aminoSequences(nullptr), m_cnt(0) {}
 
     /***************************************************************
     *-> 1-argument constructor that receives as parameter string  
@@ -19,7 +19,7 @@ namespace seneca
     * -> allocates memory for that number of protein sequnces
     * -> re-reads the file and loads the protein sequences
     ****************************************************************/
-    ProteinDatabase::ProteinDatabase(const std::string filename)
+    ProteinDatabase::ProteinDatabase(const std::string& filename)
     {
         std::ifstream f(filename.c_str());
 
@@ -89,20 +89,22 @@ namespace seneca
 
             if (m_cnt != 0)
             {
-                m_UniqueIDs[i] = src.m_UniqueIDs[i];
+                m_UniqueIDs = new std::string[m_cnt];
                 m_aminoSequences = new std::string[m_cnt];
                 for (auto i = 0u; i < m_cnt; ++i)
                 {
                     m_UniqueIDs[i] = src.m_UniqueIDs[i];
-                    m_aminoSequences[i] = src.m_aminoSequences[i]
+                    m_aminoSequences[i] = src.m_aminoSequences[i];
                 }
             }
         }
         return *this;
     }
 
-    
-    ProteinDatabase::ProteinDatabase(ProteinDatabse&& src) noexcept
+    ///////////////////////////////////////////////////
+    // Move Constructor
+    //////////////////////////////////////////////////
+    ProteinDatabase::ProteinDatabase(ProteinDatabase&& src) noexcept
     {
         *this = std::move(src);
     }
@@ -120,7 +122,7 @@ namespace seneca
         m_UniqueIDs = src.m_UniqueIDs;
         m_aminoSequences = src.m_aminoSequences;
         src.m_cnt = 0;
-        src.m_proteinSequences = nullptr;
+        src.m_aminoSequences = nullptr;
         src.m_UniqueIDs = nullptr; 
        }
        return *this;

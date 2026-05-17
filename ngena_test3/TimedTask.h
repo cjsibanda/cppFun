@@ -38,7 +38,7 @@ namespace seneca
         struct Task {
             std::string m_name{};
             std::string m_unitOfTime{};
-            std::string m_durationOfTime{};
+            std::chrono::nanoseconds m_durationOfTime{};
         }         m_events[MAX_EVENTS];
     public:
         void startClock();

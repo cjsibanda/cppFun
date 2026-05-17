@@ -41,7 +41,7 @@ namespace seneca
         * -> std::string getUID(size_t): a query that returns copy of
         * protein ID at index received as function parameter.  
         *****************************************************/
-        size_t size() const { return m_count }
+        size_t size() const { return m_cnt; }
         std::string operator[](size_t idx) const;
         std::string getUID(size_t idx) const;
 
