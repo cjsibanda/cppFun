@@ -6,7 +6,6 @@ namespace seneca {
     
     /***********************************
     * Start the timer
-    * void TimedTask::startClock()
     ************************************/
     void TimedTask::startClock()
     {
@@ -15,7 +14,6 @@ namespace seneca {
 
     /***************************************
     * Stop Timer
-    * void TimedTask::stopClock()
     ****************************************/
     void TimedTask::stopClock()
     {

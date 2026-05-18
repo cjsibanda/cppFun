@@ -46,7 +46,7 @@ namespace seneca
         /////////////////////////////////////////////////////
         // addTask() is a modifier that receives the address 
         // that holds the name of the task
-        // it will updaten the next time-record in the array
+        // it will update the next time-record in the array
         /////////////////////////////////////////////////////
         void addTask(const char*);
         friend std::ostream& operator<<(std::ostream& out, const TimedTask& task);

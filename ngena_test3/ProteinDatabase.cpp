@@ -17,7 +17,7 @@ namespace seneca
     * containing a file from which member function populates curr obj
     * -> reads file to count the number of protein sequnces in file
     * -> allocates memory for that number of protein sequnces
-    * -> re-reads the file and loads the protein sequences
+    * -> re-reads file and loads the protein sequences
     ****************************************************************/
     ProteinDatabase::ProteinDatabase(const std::string& filename)
     {

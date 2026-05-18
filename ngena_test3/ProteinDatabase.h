@@ -12,7 +12,7 @@ namespace seneca
     * ... of type std::string 
     * -> one array will store the Unique IDs of the proteins
     * -> second array will store sequence of amino acids making protein
-    * -> class keeps track of the number of proteins currently stored
+    * -> class keeps track of the number of proteins stored
     ******************************************/
     class ProteinDatabase
     {
