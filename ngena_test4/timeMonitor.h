@@ -2,6 +2,7 @@
 #define SENECA_TIMEMONITOR_H
 
 #include <iostream>
+#include <chrono>
 #include <string>
 
 namespace seneca
@@ -12,7 +13,10 @@ namespace seneca
     *******************************************************/
     class TimeMonitor 
     {
-      std::string* m_name; //use name??
+      int m_cnt{ 0 };
+      std::chrono::steady_clock::time_point m_timeStart;
+      std::chrono::steady_clock::time_point m_timeEnd; 
+      std::string* m_name; //use name?
     public:
       /******************************************
       * -> a new event with the name starts
