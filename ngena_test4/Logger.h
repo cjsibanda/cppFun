@@ -15,6 +15,7 @@ namespace seneca
     ** !! Class DOES NOT support copy ops
     ******************************************************/
     class Logger {
+      size_t m_cnt{ 0 };
       std::string* m_eventsCollection[]; //DA events in form of an array
     public:
       //Rule of 5??
