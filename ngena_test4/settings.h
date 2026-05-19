@@ -12,11 +12,9 @@ namespace seneca {
     class Settings {
         bool m_show;
         bool m_verbose;
-        bool m_time_units;
+        std::string* m_time_units;
     }
-    struct Setting {
-
-    }
+    
 
 }
 #endif
