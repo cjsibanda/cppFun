@@ -21,7 +21,7 @@ namespace seneca {
         Event(Event&&) noexcept;
         Event& operator=(const Event&);
         Event& operator=(Event&&) noexcept;
-        ~Event();
+        ~Event()
         /*******************************************
         * -> Friend Helper operator<<
         * ->inserts into the first parameter an object
