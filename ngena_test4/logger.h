@@ -15,9 +15,15 @@ namespace seneca
     ** !! Class DOES NOT support copy ops
     ******************************************************/
     class Logger {
-      int something; //??
+      std::string* m_eventsCollection[]; //DA events in form of an array
     public:
+      //Rule of 5??
       Logger();
+      Logger(const Logger&);
+      Logger(Logger&&) noexcept;
+      Logger& operator=(const Logger&);
+      Logger& operator=(Logger&&) noexcept;
+
       ~Logger();
       //Move ops
       ///////////////////////////////////////////////////////
@@ -25,8 +31,15 @@ namespace seneca
       // the event received as a parameter
       ///////////////////////////////////////////////////////
       void addEvent(const Event& event);
+      /////////////////////////////////////////////////////
       //friend helper operator
-
+      // inserts into first parameter all events stored
+      // ... in the logger received as the second parameter
+      //  format:
+      //         EVENT<endl>
+      //         EVENT<endl>
+      /////////////////////////////////////////////////////
+      friend std::ostream& operator<<(std::ostream, const Logger& log);
     }
 }
 #endif
