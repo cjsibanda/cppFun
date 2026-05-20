@@ -30,6 +30,6 @@ namespace seneca {
         *********************************************/
         friend std::ostream& operator<<(std::ostream& os, const Event& event);
 
-    }
+    };
 }
 #endif

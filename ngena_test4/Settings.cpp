@@ -1,4 +1,4 @@
-#include "settings.h"
+#include "Settings.h"
 
 namespace seneca {
     // only global instance definition??

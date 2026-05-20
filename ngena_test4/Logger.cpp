@@ -71,7 +71,7 @@ namespace seneca {
     *     EVENT<endl>
     *
     *****************************************/
-    std::ostream& operator<<(std::ostream& os, const Looger& log) {
+    std::ostream& operator<<(std::ostream& os, const Logger& log) {
         for (size_t i = 0; i < log.m_cnt; ++i) {
             os << log.m_events[i] << "\n";
         }

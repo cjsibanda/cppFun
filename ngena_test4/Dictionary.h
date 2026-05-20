@@ -37,7 +37,7 @@ namespace seneca {
       size_t m_count{ 0 };
 
       // Helper function to format tags
-      std::string formatPOS(PArtOfSpeech pos) const;
+      std::string formatPOS(PartOfSpeech pos) const;
 
     public:
       Dictionary(); // = default;
