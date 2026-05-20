@@ -4,8 +4,6 @@
 #include <iostream>
 #include <string>
 
-//do I need this??...
-//All cllases inside seneca?
 namespace seneca {
 
     enum class PartOfSpeech
@@ -35,11 +33,21 @@ namespace seneca {
     * -> at minimum -> store address of array
     ************************************************/
     class Dictionary {
-      std::string* word[]; //??????? placeholder(check!)
+      Word* m_words{ nullptr };
+      size_t m_count{ 0 };
+
+      // Helper function to format tags
+      std::string formatPOS(PArtOfSpeech pos) const;
+
     public:
-      Dictionary();
+      Dictionary(); // = default;
       Dictionary(const char* filename);
-      //No rule of 3?
+      //rule of 5?
+      ~Dictionary();
+      Dictionary(const Dictionary& src);
+      Dictionary& operator=(const Dictionary& src);
+      Dictionary(Dictionary&& src) noexcept;
+      Dictionary& operator=(Dictionary&& src) noexcept;
 
       /****************************************************
       * void searchWord(const char* word) - searches in the
@@ -47,11 +55,11 @@ namespace seneca {
       * specified as a parameter. If the word is found,
       * print the definitions in the following format
       *****************************************************/
-
+      void searchWord(const char* word) const;
 
     
 
-    }
+    };
 
 }
-
+#endif
