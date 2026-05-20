@@ -16,10 +16,11 @@ namespace seneca
     ******************************************************/
     class Logger {
       size_t m_cnt{ 0 }; //is this same counter from Events?
-      std::string* m_eventsCollection[]; //DA events in form of an array
+      //std::string* m_eventsCollection[]; //DA events in form of an array
       Event* m_events{ nullptr } // which one???
     public:
       //Rule of 5??
+      //no constructor?
       Logger(); // =defualt?
 
       //Disbale copy operations?
