@@ -47,7 +47,7 @@ namespace seneca
       //         EVENT<endl>
       //         EVENT<endl>
       /////////////////////////////////////////////////////
-      friend std::ostream& operator<<(std::ostream, const Logger& log);
-    }
+      friend std::ostream& operator<<(std::ostream&, const Logger& log);
+    };
 }
 #endif
