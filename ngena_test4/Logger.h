@@ -19,9 +19,10 @@ namespace seneca
       //std::string* m_eventsCollection[]; //DA events in form of an array
       Event* m_events{ nullptr }; // which one???
     public:
+      
       //Rule of 5??
       //no constructor?
-      Logger(); // =defualt?
+      Logger() = default;
 
       //Disbale copy operations?
       Logger(const Logger&) = delete;

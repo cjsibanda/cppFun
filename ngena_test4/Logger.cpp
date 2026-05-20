@@ -6,6 +6,8 @@ namespace seneca {
     // Copy Ops are disabled
     //////////////////////////////////////
 
+    
+
    
   //Move constructor
   Logger::Logger(Logger&& src) noexcept {
@@ -43,14 +45,14 @@ namespace seneca {
     * add to array a copy of event 
     * received a parameter
     ***********************************/
-    void addEvent(const Event& event) {
+        void Logger::addEvent(const Event& event) {
         // 1. Allocate a brand new array
         //that is 1 element larger
         Event* temp = new Event[m_cnt + 1];
 
         //2. Copy existing elements over
         for (size_t i = 0; i < m_cnt; ++i) {
-            temp[i] = m_events[i];
+            temp[i] = event; //changed from m_events??
         }
 
         //3. Place the new event at the end of the new array

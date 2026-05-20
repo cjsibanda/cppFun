@@ -20,7 +20,7 @@ namespace seneca {
         // the values of the parameters
         //////////////////////////////////////////////////
         //no need fo rule of 3/5? no dma?
-        Event(const char* name, const std::nanoseconds& duration);
+        Event(const char* name, const std::chrono::nanoseconds& duration);
         /*******************************************
         * -> Friend Helper operator<<
         * ->inserts into the first parameter an object

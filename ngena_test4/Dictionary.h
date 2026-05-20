@@ -40,7 +40,7 @@ namespace seneca {
       std::string formatPOS(PartOfSpeech pos) const;
 
     public:
-      Dictionary(); // = default;
+      Dictionary()= default;
       Dictionary(const char* filename);
       //rule of 5?
       ~Dictionary();
