@@ -4,6 +4,7 @@
 #include <iostream>
 #include <chrono>
 #include <string>
+#include "Event.h"
 
 namespace seneca
 {
@@ -13,10 +14,8 @@ namespace seneca
     *******************************************************/
     class TimeMonitor 
     {
-      int m_cnt{ 0 };
-      std::chrono::steady_clock::time_point m_timeStart;
-      std::chrono::steady_clock::time_point m_timeEnd; 
-      std::string* m_name; //use name?
+      std::string m_event_name{};
+      std::chrono::steady_clock::time_point m_start_time{}; 
     public:
       /******************************************
       * -> a new event with the name starts
@@ -29,7 +28,8 @@ namespace seneca
       * -> calulates the duration of the event
       * -> create an instance of type Event and return to client
       ***********************************/
-      void stopEvent();  
+      Event stopEvent();  
 
-    }
+    };
 }
+#endif
