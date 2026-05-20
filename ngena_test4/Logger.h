@@ -2,7 +2,7 @@
 #define SENECA_LOGGER_H
 
 #include <iostream>
-#include <string>
+#include "Event.h"
 
 namespace seneca
 {
@@ -12,21 +12,27 @@ namespace seneca
     * -> at minimum it should store the address of array
     * -> should also add any private members
     *... that your design requires
-    ** !! Class DOES NOT support copy ops
+    ** !! Class DOES NOT support copy ops (disable)
     ******************************************************/
     class Logger {
-      size_t m_cnt{ 0 };
+      size_t m_cnt{ 0 }; //is this same counter from Events?
       std::string* m_eventsCollection[]; //DA events in form of an array
+      Event* m_events{ nullptr } // which one???
     public:
       //Rule of 5??
-      Logger();
-      Logger(const Logger&);
-      Logger(Logger&&) noexcept;
-      Logger& operator=(const Logger&);
-      Logger& operator=(Logger&&) noexcept;
+      Logger(); // =defualt?
 
+      //Disbale copy operations?
+      Logger(const Logger&) = delete;
+      Logger& operator=(const Logger&) = delete;
+
+      //Enable move ops
+      Logger(Looger&& src) noexcept;
+      Logger& operator=(Logger&& src) noexcept;
+
+      //destructor
       ~Logger();
-      //Move ops
+
       ///////////////////////////////////////////////////////
       // -> addEvent should add to the array a copy of
       // the event received as a parameter
