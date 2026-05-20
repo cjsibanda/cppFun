@@ -28,7 +28,7 @@ namespace seneca
       Logger& operator=(const Logger&) = delete;
 
       //Enable move ops
-      Logger(Looger&& src) noexcept;
+      Logger(Logger&& src) noexcept;
       Logger& operator=(Logger&& src) noexcept;
 
       //destructor
