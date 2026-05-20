@@ -14,7 +14,7 @@ namespace seneca {
         std::string m_eventName{};
         std::chrono::nanoseconds m_duration{ 0 };
     public:
-        Event() = default;
+        Event() = default; //= default()???
         //////////////////////////////////////////////////
         // Instantiates the current instance with
         // the values of the parameters
