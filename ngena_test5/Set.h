@@ -4,10 +4,13 @@
 #include <iostream>
 
 namespace seneca {
-    /************************************
-    * If you want to go fast, go alone.
-    * If you want to go far, go together.
-    * I am because we are
-    **************************************/
+    //Set represents a collection where no
+    //item appears more than once
+    class Set {
+       //private members?
+    public:
+       //overriding the inherited function here
+
+    }
 }
 #endif
