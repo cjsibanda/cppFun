@@ -14,7 +14,7 @@ namespace seneca {
        //overriding the inherited function here
        bool add (const T& item) override
        {
-         for (auto i = 0u; i < this->size(); ++i)
+         for (unsigned int i = 0; i < this->size(); ++i)
          {
             if ((*this)[i] == item)
                       return false;
@@ -30,17 +30,17 @@ namespace seneca {
     //numbers that are 0.01 from each other
     //are considered the same
     template<>
-    bool Set<double>::add(const double& item)
-    {
-      double epsilon = 0.01;
-
-      for (auto i = 0u; i < this->size(); ++i)
-      {
-         if (std::fabs((*this)[i] - item) <= epsilon)
-                 return false;
+    inline bool Set<double>::add(const double& item) {
+      const double epsilon = 0.01;
+      
+      for (unsigned int i = 0; i < this->size(); ++i) {
+         if (std::fabs((*this)[i] - item) <= epsilon) {
+            return false;
+         }
       }
-
       return Collection<double, SET_CAPACITY>::add(item);
+
     }
+    
 }
 #endif
