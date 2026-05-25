@@ -27,10 +27,42 @@ namespace seneca {
     // add any other prototypes for members here
     //////////////////////////////////////////////
     Pair() = default;
-    bool operator==(const Pair& src);
+    /************************************* 
+    * This is a comparison operator
+    * it will check if the m_key strings match
+    * The template has to match the word (key)
+    * ... to consider it found
+    **************************************/
+    bool operator==(const Pair& src) const;
+
+    ////////////////////////////////////////////////
+    //helps with printing formating
+    //force the key(word) into right-aligned field
+    // of size 20, followed by colon and value
+    //////////////////////////////////////////////////
     friend std::ostream& operator<<(std::ostream& out, const Pair& item);
-  }
+  };
 
 }
+
+/*************************************************
+ * -> Why thes members are necessary
+ * -> Pair() = default; ... is necessary because
+ * Template collection claases require a default 
+ * constructor to initialize elements when creating
+ * or resizing dynamic arrays of object
+ * 
+ * -> bool operator==(const Pair& src) const
+ * This is the Equlaity operator. It allows
+ * template search functions to look up records
+ * matching only the word (m_key) while ignoring definition
+ * 
+ * -> operator (insertion op)
+ * Insertion op allows generic template
+ * print/display functions to the
+ * customer Pair object
+ * 
+ * 
+ *************************************************/
 
 #endif
