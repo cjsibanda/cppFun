@@ -7,7 +7,7 @@ namespace seneca {
     //Set represents a collection where no
     //item appears more than once
     template<typename T>
-    class Set : public Collection<T, SET_CAPACITY>
+    class Set : public Collection<T, 100>
     {
        //private members???
     public:
@@ -20,7 +20,7 @@ namespace seneca {
                       return false;
          }
 
-         return Collection<T, SET_CAPACITY>::add(item);
+         return Collection<T, 100>::add(item);
        }
 
     };
@@ -38,7 +38,7 @@ namespace seneca {
             return false;
          }
       }
-      return Collection<double, SET_CAPACITY>::add(item);
+      return Collection<double, 100>::add(item);
 
     }
     
