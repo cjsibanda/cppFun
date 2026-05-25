@@ -26,6 +26,9 @@ namespace seneca {
     /////////////////////////////////////////////
     // add any other prototypes for members here
     //////////////////////////////////////////////
+    Pair() = default;
+    bool operator==(const Pair& src);
+    friend std::ostream& operator<<(std::ostream& out, const Pair& item);
   }
 
 }
