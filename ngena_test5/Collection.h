@@ -36,7 +36,7 @@ namespace {
     template<typename T, int CAPACITY>
     //....
 
-    template<>
+    template<> //specialization
     //....
 }
 #endif
