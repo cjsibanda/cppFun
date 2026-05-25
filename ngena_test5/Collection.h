@@ -1,11 +1,11 @@
 #ifndef SENECA_COLLECTION_H
 #define SENECA_COLLECTION_H
+
 #include <iostream>
 #include "Pair.h"
 
-#include <string>
 
-namespace {
+namespace seneca {
     
     /**************************************************
     * -> Colelctions: represents a family of collections
@@ -16,15 +16,15 @@ namespace {
     * ... this is the max num of elements that can be added
     * -> keep track of current number of elements stored
     ****************************************************/
-    template <typename T, int CAPACITY>
+    template <typename T, unsigned int CAPACITY>
     class Collection {
         //private memebers
         // an object of type T stat store default value
         // allows duplicates?
-        T m_items[CAPACITY]{};
+        T m_items[CAPACITY]{}; //statically allocated array of items
         size_t m_count{}; //keep track of current num of elements stored
 
-        static T m_defaultValue;
+        static T m_dummyValue;
 
     public: 
         virtual bool add(const T& item)
@@ -32,12 +32,14 @@ namespace {
             if (m_count < CAPACITY)
             {
                 m_items[m_count++] = item;
+                m_count++;
                 return true;
             }
             return false;
         }
 
-        size_t size() const
+        //size query
+        unsigned int size() const
         {
             return m_count;
         }
@@ -48,17 +50,17 @@ namespace {
             std::cout << "| Collection Content |\n";
             std::cout << "----------------------\n";
 
-            for (auto i = 0u; i < m_count; ++i)
-                  out << m_count[i] << '\n';
+            for (unsigned int i = 0; i < m_count; ++i)
+                  out << m_items[i] << "\n";
             std::cout << "---------------------\n";
         }
 
-        T operator[](size_t idx) const 
+        T operator[](unsigned int index) const 
         {
-            if (idx < m_count)
-                return m_items[idx];
+            if (index < m_count)
+                return m_items[index];
 
-            return m_defaultValue;
+            return m_dummyValue;
         }
         
         virtual ~Collection() = default;
@@ -67,11 +69,11 @@ namespace {
 
     // Template Assumptions here
     // inline for redefinitions (need to be identical)
-    template<typename T, int CAPACITY>
-    inline T Collection<T, CAPACITY>::m_defaultValue{};
+    template<typename T, unsigned int CAPACITY>
+    inline T Collection<T, CAPACITY>::m_dummyValue{};
 
     template<> //specialization
-    inline Pair Collection<Pair, 100>::m_defaultValue("No Key", "No Value");
+    inline Pair Collection<Pair, 100>::m_dummyValue("No Key", "No Value");
 }
 #endif
 
