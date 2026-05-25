@@ -1,0 +1,76 @@
+////////////////////////////////////////////
+//CONCEPT ANSWERS:
+////////////////////////////////////////////
+--> The reason for specializing the add() member function:
+Specializations lets me override the default
+behavior when standard operators fail or behave
+wrongly for a specific type. 
+
+--> The reason for defining the class variable outside the class definition
+A static class variable declared inside the class
+only establishes its existence; it must be defined outside
+the class body to allocate physical memory and permit initializaation
+across translation units
+
+///////////////////////////////////////////////
+//Pair.h extra private members:
+///////////////////////////////////////////////
+/*************************************************
+ * -> Why thes members are necessary
+ * -> Pair() = default; ... is necessary because
+ * Template collection claases require a default 
+ * constructor to initialize elements when creating
+ * or resizing dynamic arrays of object
+ * 
+ * -> bool operator==(const Pair& src) const
+ * This is the Equlaity operator. It allows
+ * template search functions to look up records
+ * matching only the word (m_key) while ignoring definition
+ * 
+ * -> operator (insertion op)
+ * Insertion op allows generic template
+ * print/display functions to the
+ * customer Pair object
+ * 
+ * 
+ *************************************************/
+
+
+//////////////////////////////////////////////
+// How-To Guide
+//////////////////////////////////////////////
+--> How to design and code a class template:
+Prefix your class definition with template <typename T>
+(or alternate non-type arguments) and use
+the placeholder type T throughout the class fields
+and methods instead of concrete datatypes.
+
+--> How to template a class variable
+Declare the variable inside your class template
+with the static keyword, then define it outside
+the class body using the full template <typname T...>
+signature prefix.
+
+--> How to specialize a templated class variable for a particular type:
+Write template <> followed by the fully qualified class name
+containing your explicit type argument, initializing the static
+member value inline or in an implementation scope
+
+--> How to instatiate a template class?
+Provide concrete types inside angle brackets
+next to the template class name when declaring 
+an object, forcing the compiler to generate the 
+unique class blueprint.
+
+--> How to specialize a member function of a templated
+--> class to process a particular type
+Declare the function declaration outside the
+class template with an empty template <> prefix,
+specifying the target type inside angle brackets
+directly attached to the class name scope
+
+--> Derive a templated class from another templated class
+Specify the base template class complete with its
+necessary arguments or inherited placeholder directly
+after the colon in the derived class definition header.
+
