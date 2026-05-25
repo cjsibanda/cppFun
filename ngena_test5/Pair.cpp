@@ -3,7 +3,7 @@
 
 namespace seneca {
 
-    //constructor is default (Pair() = default;)
+    // default constuctor --> (Pair() = default;)
 
     /************************************* 
     * This is a comparison operator
