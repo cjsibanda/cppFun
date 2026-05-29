@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 
 		for (const auto& item : iData)
 			colIntegers.add(item);
-
+		
 		std::cout << "Collection size: [" << colIntegers.size() << "]\n";
 		colIntegers.display();
 

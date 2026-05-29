@@ -32,7 +32,7 @@ namespace seneca {
             if (m_count < CAPACITY)
             {
                 m_items[m_count++] = item;
-                m_count++;
+                //m_count++;
                 return true;
             }
             return false;
