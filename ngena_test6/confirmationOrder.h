@@ -17,7 +17,7 @@ namespace seneca {
     class ConfirmationOrder
     {
         const Toy** m_toys{};
-        size_t m_numToys{};
+        size_t m_count{};
     public:
         //default constructor
         ConfirmationOrder() = default;
@@ -40,7 +40,7 @@ namespace seneca {
 
 
         //add toy address
-        ConfirmationOrder& operator+=(const Tpy& toy);
+        ConfirmationOrder& operator+=(const Toy& toy);
 
         //remove toy address
         ConfirmationOrder& operator-=(const Toy& toy);
