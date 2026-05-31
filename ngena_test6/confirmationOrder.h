@@ -14,7 +14,7 @@ namespace seneca {
     * children who want to shop and retreive approval before placing
     * an order
     *****************************************************************/
-    class confirmationOrder
+    class ConfirmationOrder
     {
         const Toy** m_toys{};
         size_t m_numToys{};
@@ -23,7 +23,7 @@ namespace seneca {
         ConfirmationOrder() = default;
 
         //copy constructor
-        ConfirmationOrder(const ConfrimationOrder& src);
+        ConfirmationOrder(const ConfirmationOrder& src);
 
         //copy assignment operator
         ConfirmationOrder& operator=(const ConfirmationOrder& src);
@@ -40,7 +40,7 @@ namespace seneca {
 
 
         //add toy address
-        ConfirmationORder& operator+=(const Tpy& toy);
+        ConfirmationOrder& operator+=(const Tpy& toy);
 
         //remove toy address
         ConfirmationOrder& operator-=(const Toy& toy);
