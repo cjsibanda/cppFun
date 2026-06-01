@@ -16,17 +16,10 @@ namespace seneca {
     {
         std::string m_name{};
         int m_age{};
-
-        const Toy** m_toys{};
-        int m_age{};
-
-        const Toy** m_toys{};
-        size_t m_numToys{};
-
-        static int m_callCnt;
-    
+        const seneca::Toy** m_toys{};
+        size_t m_count{};
      public:
-
+        
         //default constructor
         ShoppingCart() = default;
 

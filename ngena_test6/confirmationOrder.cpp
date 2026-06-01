@@ -67,15 +67,15 @@ ConfirmationOrder& ConfirmationOrder::operator+=(const Toy& toy)
           if (found == false)
           {
             //resize & add
-            const Toy** tmp = nullptr;
-            tmp = new const Toy * [m_count + 1];
+            const Toy** temp = nullptr;
+            temp = new const Toy * [m_count + 1];
             for (auto i = 0u; i < m_count; ++i)
-                   tmp[i] = m_toys[i];
-            tmp[m_count] = &toy;
+                   temp[i] = m_toys[i];
+            temp[m_count] = &toy;
 
             ++m_count;
             delete[] m_toys;
-            m_toys = tmp;
+            m_toys = temp;
           }
           return *this;
 }

@@ -1,8 +1,8 @@
 #ifndef SENECA_TOY_H
 #define SENECA_TOY_H
 
-#include <iostream> //needed???
-#include <string> //???
+#include <iostream> 
+#include <string> 
 
 namespace seneca {
     /*******************************************************
@@ -11,12 +11,14 @@ namespace seneca {
     * id, name, number of items, price, harmonized sales tax
     ********************************************************/
     class Toy {
-        unsigned int m_id{};
+        unsigned int m_id{0};
         std::string m_name{};
-        unsigned int m_numItems{};
+        unsigned int m_num{0};
         double m_price{};
 
-        static constexpr double HST = 0.13;
+        static constexpr double hst = 0.13;
+
+        void trim(std::string& str) const;
         
     public:
        Toy() = default; //default constructor
@@ -25,13 +27,13 @@ namespace seneca {
        Toy(const std::string& toy);
 
        //modifier
-       void update(int numItems);
+       void update(int numItems) {m_num = numItems;};
 
 
        //output helper
        friend std::ostream& operator<<(std::ostream& os, const Toy& toy);
        
-    }
+    };
 
 }
 #endif
