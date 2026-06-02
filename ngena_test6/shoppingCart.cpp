@@ -36,9 +36,9 @@ namespace seneca
             else {
                 m_toys = nullptr;
             }
-            return *this;
+            
         }
-
+        return *this;
     }
     //move constructor
     ShoppingCart::ShoppingCart(ShoppingCart&& src) noexcept
