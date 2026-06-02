@@ -56,29 +56,41 @@ ConfirmationOrder::~ConfirmationOrder()
     delete[] m_toys;
 }
 
-
+/// 
 ConfirmationOrder& ConfirmationOrder::operator+=(const Toy& toy)
 {
-   bool found = false;
-   for (auto i = 0u; i < m_count && found == false; ++i)
-       if (&toy == m_toys[i])
-          found = true;
-    
-          if (found == false)
-          {
-            //resize & add
-            const Toy** temp = nullptr;
-            temp = new const Toy * [m_count + 1];
-            for (auto i = 0u; i < m_count; ++i)
-                   temp[i] = m_toys[i];
-            temp[m_count] = &toy;
+    bool found = false;
 
-            ++m_count;
-            delete[] m_toys;
-            m_toys = temp;
-          }
-          return *this;
+    for (auto i = 0u; i < m_count && found == false; ++i)
+    {
+        if (&toy == m_toys[i])
+        {
+            found = true;
+        }
+    }
+
+    if (found == false)
+    {
+        const Toy** temp = nullptr;
+
+        temp = new const Toy*[m_count + 1];
+
+        for (auto i = 0u; i < m_count; ++i)
+        {
+            temp[i] = m_toys[i];
+        }
+
+        temp[m_count] = &toy;
+
+        ++m_count;
+
+        delete[] m_toys;
+        m_toys = temp;
+    }
+
+    return *this;
 }
+/////
 
 ConfirmationOrder& ConfirmationOrder::operator-=(const Toy& toy)
 {
