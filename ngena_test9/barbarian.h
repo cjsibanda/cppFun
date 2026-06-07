@@ -22,8 +22,10 @@ namespace seneca {
         //initializes new object to values recieved as parameters
         Barbarian(const char* name, int healthMax, int baseAttack, int baseDefense, 
                   Weapon_t w1, Weapon_t w2) 
-            : CharacterTpl<T>(name, healthMax), m_baseAttack(baseAttack), 
-              m_baseDefense(baseDefense) {
+            : CharacterTpl<T>(name, healthMax), 
+              m_baseDefense(baseDefense),
+              m_baseAttack(baseAttack) 
+        {
             m_weapon[0] = w1; m_weapon[1] = w2;
         }
 
@@ -42,7 +44,7 @@ namespace seneca {
 
         //attacks the enemy received as parameter, inflicts damage
         void attack(Character* enemy) override {
-            std::cout << getName() << " is attacking " << enemy->getName() << "." << std::endl;
+            std::cout << this->getName() << " is attacking " << enemy->getName() << "." << std::endl;
             m_ability.useAbility(this);
             int dmg = getAttackAmnt();
             m_ability.transformDamageDealt(dmg);
@@ -52,7 +54,7 @@ namespace seneca {
 
         //other character inflicts damage in parameter amount
         void takeDamage(int dmg) override {
-            std::cout << getName() << " is attacked for " << dmg << " damage." << std::endl;
+            std::cout << this->getName() << " is attacked for " << dmg << " damage." << std::endl;
             std::cout << "    Barbarian has a defense of " << getDefenseAmnt() 
                       << ". Reducing damage received." << std::endl;
             
