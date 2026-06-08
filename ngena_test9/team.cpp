@@ -6,7 +6,7 @@ namespace seneca {
 
     
 
-    //Example of a helper for Rule of 5: Deep Copy
+    
     Team::Team(const Team& other) { *this = other; }
 
     Team& Team::operator=(const Team& other) {
@@ -92,16 +92,16 @@ namespace seneca {
         m_members = temp;
     }
 
+    
     void Team::showMembers() const {
-        if(m_size == 0)
-        {
-            std::cout << "No Team." << std::endl;
-            return;
-            std::cout << "[Team] " << m_name << std::endl;
-            for(size_t i = 0; i < m_size; ++i)
-            {
-                std::cout << "  " << i + 1 << ": " << *m_members[i] << std::endl;
-            }
-        }
+    if(m_size == 0) {
+        std::cout << "No Team." << std::endl;
+        return;
     }
+    std::cout << "[Team] " << m_name << std::endl;
+    for(size_t i = 0; i < m_size; ++i) {
+        std::cout << "    " << i + 1 << ": " << *m_members[i] << std::endl;
+      }
+    }
+    
 }

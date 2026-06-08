@@ -10,7 +10,7 @@ namespace seneca {
     * class is a concrete class implementing barbarian specific logic
     ******************************************************************/
    // T: the type of object storing the health
-   //Ability_t: the type implementing the special abilities 
+   //Ability_t: the type implementing the special abilities
    //Weapon_h: the type implementing weapons barbarian handles
     template <typename T, typename Ability_t, typename Weapon_t>
     class Barbarian : public CharacterTpl<T> {
@@ -20,20 +20,27 @@ namespace seneca {
         Weapon_t m_weapon[2];
     public:
         //initializes new object to values recieved as parameters
-        Barbarian(const char* name, int healthMax, int baseAttack, int baseDefense, 
-                  Weapon_t w1, Weapon_t w2) 
-            : CharacterTpl<T>(name, healthMax), 
+        Barbarian(const char* name, int healthMax, int baseAttack, int baseDefense,
+                  Weapon_t w1, Weapon_t w2)
+            : CharacterTpl<T>(name, healthMax),
               m_baseDefense(baseDefense),
-              m_baseAttack(baseAttack) 
+              m_baseAttack(baseAttack)
         {
             m_weapon[0] = w1; m_weapon[1] = w2;
         }
 
         //return damage that character can do in attack
         // using BASE_ATTACK formula
+        ////////////////// fixed the integer arithmetic to match output
+        //////////////////
         int getAttackAmnt() const override {
-            return m_baseAttack + static_cast<double>(m_weapon[0]) + static_cast<double>(m_weapon[1]);
+        // Cast each weapon to int individually to truncate the decimal
+        int w1 = static_cast<int>(static_cast<double>(m_weapon[0]));
+        int w2 = static_cast<int>(static_cast<double>(m_weapon[1]));
+
+        return m_baseAttack + w1 + w2;
         }
+        /////////////
 
         //return base defense value
         int getDefenseAmnt() const override { return m_baseDefense; }
@@ -55,9 +62,9 @@ namespace seneca {
         //other character inflicts damage in parameter amount
         void takeDamage(int dmg) override {
             std::cout << this->getName() << " is attacked for " << dmg << " damage." << std::endl;
-            std::cout << "    Barbarian has a defense of " << getDefenseAmnt() 
+            std::cout << "    Barbarian has a defense of " << getDefenseAmnt()
                       << ". Reducing damage received." << std::endl;
-            
+
             int actualDamage = (dmg - getDefenseAmnt() < 0) ? 0 : dmg - getDefenseAmnt();
             m_ability.transformDamageReceived(actualDamage);
             CharacterTpl<T>::takeDamage(actualDamage);

@@ -3,41 +3,58 @@
 
 #include <iostream>
 #include <string>
+#include "character.h"
 
 namespace seneca {
+    /************************************************
+    * class Guild manages dynamically allocated collection
+    * of characters in the form of an array 
+    * -> works with array of pointers to Character
+    * stores address to array
+    * -> Guild is in AGGREGATION relationship with Character
+    *************************************************/
     class Guild {
-        Character** m_members = nullptr;
+        Character** m_members = nullptr; //stores addree of array
         size_t m_size = 0;
-        std::string m_name;
+        std::string m_name; //string with name of guild
     public:
-        Guild(const char* name) : m_name(name) {}
-        ~Guild() { delete[] m_members; }
+        Guild() = default; //default constructor
+        Guild(const char* name); //creates guild with parameter name
+        ~Guild();
+        
+        // Rule of 5
+        Guild(const Guild& other);
+        Guild& operator=(const Guild& other);
+        Guild(Guild&& other) noexcept;
+        Guild& operator=(Guild&& other) noexcept;
 
-        void addMember(Character* c) {
-            for(size_t i=0; i<m_size; ++i) if(m_members[i] == c) return;
-            c->setHealthMax(c->getHealthMax() + 300);
-            c->setHealth(c->getHealthMax());
-            Character** temp = new Character*[m_size + 1];
-            for(size_t i=0; i<m_size; ++i) temp[i] = m_members[i];
-            temp[m_size++] = c;
-            delete[] m_members;
-            m_members = temp;
-        }
+        /*******************************************
+        * adds the character received as a parameter
+        * to guild ONLY if it's not already in guild
+        * Resize array if necessary
+        *******************************************/
+        void addMember(Character* c);
 
-        void removeMember(const std::string& name) {
-            for(size_t i=0; i<m_size; ++i) {
-                if(m_members[i]->getName() == name) {
-                    m_members[i]->setHealthMax(m_members[i]->getHealthMax() - 300);
-                    // Shift and resize logic...
-                }
-            }
-        }
+        //searches guild for parameter name
+        //removes it
+        void removeMember(const std::string& name);
 
-        void showMembers() const {
-            if(m_size == 0) { std::cout << "No guild." << std::endl; return; }
-            std::cout << "[Guild] " << m_name << std::endl;
-            for(size_t i=0; i<m_size; ++i) std::cout << "    " << i+1 << ": " << *m_members[i] << std::endl;
-        }
+        //returns character at the index specified by parameter
+        Character* operator[](size_t idx) const;
+
+        /********************************************
+        * Prints tp the screen the current object in format
+        *  [Guild] GUILD_NAME<endl>
+        *    1: FIRST_CHARACTER<endl>
+        *    2: SECOND_CHARACTER<endl>
+        *    3: THIRD_CHARACTER<endl>
+        *    ...
+        * 
+        * uses operator<< defined for the class Charater to
+        * print a single character.
+        * 
+        *********************************************/
+        void showMembers() const;
     };
 }
-#endif //SENECA_GUILD_H
+#endif
