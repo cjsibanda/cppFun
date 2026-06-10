@@ -9,6 +9,7 @@ namespace seneca {
     
     Team::Team(const Team& other) { *this = other; }
 
+    //copy Assignment operator??
     Team& Team::operator=(const Team& other) {
         if (this != &other) {
             //1. clean up
