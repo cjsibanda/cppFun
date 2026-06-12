@@ -58,6 +58,40 @@ namespace seneca {
 
 
 
+     size_t Directory::size() const {
+        size_t s = 0u;
+
+        for (auto it = m_contents.begin(); it != m_contents.end(); it++) {
+            s += (*it)->size();
+        }
+
+        return s;
+    }
+
+    Directory& Directory::operator+=(Resource* resource) {
+        for (Resource* r : m_contents) {
+            std::string r_name = r->name();
+
+            if (r_name == resource->name()) {
+                throw std::string("Resource already exists in directory!");
+            }
+        }
+
+        m_contents.push_back(resource);
+        resource->update_parent_path(path());
+
+        return *this;
+    }
+
+    //remove deletes a resource from the directory 
+    //
+    void Directory::remove(const std::string& rname, const std::vector<OpFlags>& flags) {
+   
+      //???????
+    }
+
+    
+    
 
 
 

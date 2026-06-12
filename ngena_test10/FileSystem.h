@@ -2,7 +2,7 @@
 #define SENECA_FILESYSTEM_H
 
 #include <vector>
-#inlcude <ostream>
+#include <ostream>
 
 #include "Resource.h"
 #include "Directory.h"
