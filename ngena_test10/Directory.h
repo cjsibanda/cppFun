@@ -39,7 +39,7 @@ namespace seneca {
         size_t size() const override;
         int count() const override;
 
-        void remove(const std::string& const std::vector<OpFlags>& = {});
+        void remove(const std::string&, const std::vector<OpFlags>& = {});
         void display(std::ostream&, const std::vector<FormatFlags>& = {}) const;
     }; 
 }
