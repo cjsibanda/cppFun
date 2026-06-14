@@ -1,0 +1,38 @@
+--------------------------------------------------
+-> Why it is important to dynamically allocate
+memory in vector of resources
+--------------------------------------------------
+- vector stores raw pointers (Resource*) created with new, 
+which are not automatically managed.
+- If you don’t delete them in the destructor, it causes a 
+memory leak, since the heap memory is never released.
+- Each Directory “owns” its resources, so it is 
+responsible for cleaning them up.
+
+----------------------------------------------------
+The special C++ operations needed to call specific
+functions for Directory objects stored in Resource*
+----------------------------------------------------
+- needed dynamic_cast<Directory*>
+- This is required because the objects are stored as
+ base class pointers (Resource*), and C++ only knows 
+ their static type.
+- dynamic_cast safely checks at runtime whether the object
+ is actually a Directory before allowing access to
+  directory-specific functions like find() or recursive
+   operations
+
+----------------------------------------------------------------
+Using std::vector<seneca::Resource*> to store collection
+of filesytem resources instead of std::vector<seneca::Resource>
+-----------------------------------------------------------------
+- cannot use std::vector<seneca::Resource> because
+ Resource is an abstract class (contains pure virtual
+  functions), so it cannot be instantiated.
+- Even if it were not abstract, storing objects by value
+ would cause object slicing, where derived parts (File or
+  Directory) would be lost.
+- Using pointers preserves polymorphism, allowing the
+ vector toto store both File and Directory objects correctly.
+
+
