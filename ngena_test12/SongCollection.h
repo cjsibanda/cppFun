@@ -30,7 +30,10 @@ namespace seneca
     **************************************************/
     class SongCollection
     {
-        std::string name;
+        //use vector
+        std::vector<seneca::Song> m_songs;
+        
+        //trim??? maybe?
     public:
         //---------------------------------------------------
         // custom constructor that receives name as parameter
