@@ -133,5 +133,23 @@ namespace seneca {
     });
   }
 
+  /*****************************************************************
+  * receives the name of an artist as a parameter
+  * returns the list of songs that artists available in collection
+  *****************************************************************/
+  std::list<Song> SongCollection::getSongsForArtists(std::string artist) const
+  {
+    auto res = std::find_if(m_songs.begin(), m_songs.end(), [&artist](const Song& aSong)
+      {
+           return aSong.m_artist == artist;
+      });
+      std::list<Song> songs(cnt);
+
+      std::copy_if(m_songs(), m_songs.end, songs.begin(), [&artist](const Song& aSong)
+      {
+         return aSong.m_artist == artist;
+      });
+      return songs;
+  }
 
 }
