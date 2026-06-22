@@ -93,7 +93,45 @@ namespace seneca {
           << " |\n";
    }
 
+   /***************************************************************
+   * Receives name parameter of field used to sort collection
+   * Sort in Ascending order
+   * Parameter can have one of the values titel, album, or length
+   * NO MANUAL LOOPS
+   ****************************************************************/
+   void SongCollection::sort(std::string field)
+   {
+      if (field == "title")
+			std::sort(m_songs.begin(), m_songs.end(), [](const Song& a, const Song& b) { return a.m_title < b.m_title; });
+		else if (field == "album")
+			std::sort(m_songs.begin(), m_songs.end(), [](const Song& a, const Song& b) { return a.m_album < b.m_album; });
+		else if (field == "length")
+			std::sort(m_songs.begin(), m_songs.end(), [](const Song& a, const Song& b) { return a.m_songLength < b.m_songLength; });
+   }
 
+   /******************************************************
+   * Receives the name of an artist as a parameter 
+   * returns true if collection contains song by artist
+   * NO MANUAL LOOPS
+   *******************************************************/
+   bool SongCollection::inCollection(std::string artist) const
+   {
+        auto res = std::find_if(m_songs.begin(), m_songs.end(), [&artist](const Song& aSong) {return aSong.m_artist == artist; });
+        return res != m_songs.end();
+   }
+
+   /********************************************************
+   * Removes the token [None] from the album field of songs
+   * that do not have a valid album
+   *********************************************************/
+  void SongCollection::cleanAlbum() 
+  {
+    for_each(m_songs.begin(), m_songs.end(), [](Song& song) {if (song.m_album == "[None]") song.m_album = "";});
+    std::transform(m_songs.begin(), m_songs.end(), m_songs.begin(), [](Song song) 
+    {if (song.m_album == "[None]") song.m_album = "";
+         return song;
+    });
+  }
 
 
 }
