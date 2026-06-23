@@ -8,11 +8,26 @@
 
 #include "SongCollection.h"
 
-//void printbar(std::ostream& out);
+//--------------------------------------------->
+//Need Trim helper?
+// Any blank space at the beginning/end of token
+//...should be removed
+//<-----------------------------------------------
+static std::string trim(const std::string& str)
+{
+    size_t first = str.find_first_not_of(' ');
+    size_t last = str.find_last_not_of(' ');
+
+    if (first == std::string::npos)
+       return "";
+
+    return str.substr(first, last - first + 1);
+}
 
 
 
 namespace seneca {
+    //<-------------------------------------------
     /************************************************************************************
     * Custom Constructor - receives name of the file as parameter
     * The function should load into the attributes all the songs of the file
@@ -35,6 +50,21 @@ namespace seneca {
         Song song;
         std::string line;
         std::getline(file, line);
+        /******************************************
+        *    TITLE   = 25 chars
+        *    ARTIST  = 25 chars
+        *    ALBUM   = 25 chars
+        *    YEAR    = 5 chars
+        *    LENGTH  = 5 chars
+        *    PRICE   = 5 chars
+        *******************************************/
+        song.m_title = trim(line.substr(0, 25));
+        song.m_artist = trim(line.substr(25, 25));
+        song.m_album = trim(line.substr(50, 25));
+        
+        //year = trim(year);
+        //length = trim(length);
+        //price = trim(price);
         if (file)
         {
             //------------------>
@@ -43,8 +73,11 @@ namespace seneca {
             //song.m_album;
             //<--------------------
             
+            //song.m_songLength = std::stoul(length);
             song.m_songLength = 0;
-            song.m_price = 0.0;
+
+            //song.m_price = std::stod(price);
+            song.m_price = 0;
             this->m_songs.push_back(song);
         }
        }
