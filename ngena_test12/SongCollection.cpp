@@ -134,11 +134,23 @@ namespace seneca {
    void SongCollection::sort(const std::string& field)
    {
       if (field == "title")
-			std::sort(m_songs.begin(), m_songs.end(), [](const Song& a, const Song& b) { return a.m_title < b.m_title; });
+			std::sort(m_songs.begin(),
+                      m_songs.end(),
+                      [](const Song& a,
+                      const Song& b)
+                      { return a.m_title < b.m_title; });
 		else if (field == "album")
-			std::sort(m_songs.begin(), m_songs.end(), [](const Song& a, const Song& b) { return a.m_album < b.m_album; });
+			std::sort(m_songs.begin(),
+                      m_songs.end(),
+                      [](const Song& a,
+                      const Song& b) 
+                      { return a.m_album < b.m_album; });
 		else if (field == "length")
-			std::sort(m_songs.begin(), m_songs.end(), [](const Song& a, const Song& b) { return a.m_songLength < b.m_songLength; });
+			std::sort(m_songs.begin(),
+                      m_songs.end(), 
+                      [](const Song& a, 
+                      const Song& b) 
+                      { return a.m_songLength < b.m_songLength; });
    }
 
    /******************************************************
@@ -148,7 +160,11 @@ namespace seneca {
    *******************************************************/
    bool SongCollection::inCollection(const std::string& artist) const
    {
-        auto res = std::find_if(m_songs.begin(), m_songs.end(), [&artist](const Song& aSong) {return aSong.m_artist == artist; });
+        auto res = std::find_if(
+            m_songs.begin(),
+            m_songs.end(), 
+            [&artist](const Song& aSong) 
+            {return aSong.m_artist == artist; });
         return res != m_songs.end();
    }
 
