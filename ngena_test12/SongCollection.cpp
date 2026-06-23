@@ -3,10 +3,12 @@
 #include <fstream>
 #include <algorithm>
 #include <numeric>
+#include <iterator>
 #include <string>
+
 #include "SongCollection.h"
 
-void printbar(std::ostream& out);
+//void printbar(std::ostream& out);
 
 
 
@@ -14,7 +16,7 @@ namespace seneca {
     /************************************************************************************
     * Custom Constructor - receives name of the file as parameter
     * The function should load into the attributes all the songs of the file
-    * Eachh line from the file contains info about a single song in the following format:
+    * Each line from the file contains info about a single song in the following format:
     *      TITLE ARTIST ALBUM YEAR LENGTH PRICE   
     * Fields are NOT seperated by delimiters
     * Each field has fixed size exactly 25 characters
@@ -31,22 +33,18 @@ namespace seneca {
        while (file)
        {
         Song song;
-        std::getline(file);
+        std::string line;
+        std::getline(file, line);
         if (file)
         {
-            this->song.m_title;
-            this->song.m_artist;
-            this->song.m_album;
-            try
-            {
-                song.m_releaseYear = this->m_releaseYear;
-            }
-            catch(...)
-            {
-                song.m_releaseYear = 0; //???
-            }
-            song.m_songLength = this->m_songLength;
-            song.m_price = this->m_songPrice;
+            //------------------>
+            //song.m_title;
+            //song.m_artist;
+            //song.m_album;
+            //<--------------------
+            
+            song.m_songLength = 0;
+            song.m_price = 0.0;
             this->m_songs.push_back(song);
         }
        }
@@ -82,7 +80,8 @@ namespace seneca {
       size_t minutes = (totalSeconds % 3600 ) / 60;
       size_t seconds = totalSeconds % 60;
 
-      printbar(out);
+      //might need this
+      //printbar(out);
 
       out << "| "
           << std::setw(84)
@@ -99,7 +98,7 @@ namespace seneca {
    * Parameter can have one of the values titel, album, or length
    * NO MANUAL LOOPS
    ****************************************************************/
-   void SongCollection::sort(std::string field)
+   void SongCollection::sort(const std::string& field)
    {
       if (field == "title")
 			std::sort(m_songs.begin(), m_songs.end(), [](const Song& a, const Song& b) { return a.m_title < b.m_title; });
@@ -114,7 +113,7 @@ namespace seneca {
    * returns true if collection contains song by artist
    * NO MANUAL LOOPS
    *******************************************************/
-   bool SongCollection::inCollection(std::string artist) const
+   bool SongCollection::inCollection(const std::string& artist) const
    {
         auto res = std::find_if(m_songs.begin(), m_songs.end(), [&artist](const Song& aSong) {return aSong.m_artist == artist; });
         return res != m_songs.end();
@@ -126,33 +125,44 @@ namespace seneca {
    *********************************************************/
   void SongCollection::cleanAlbum() 
   {
-    for_each(m_songs.begin(), m_songs.end(), [](Song& song) {if (song.m_album == "[None]") song.m_album = "";});
-    std::transform(m_songs.begin(), m_songs.end(), m_songs.begin(), [](Song song) 
-    {if (song.m_album == "[None]") song.m_album = "";
-         return song;
-    });
+    std::for_each(
+        m_songs.begin(),
+        m_songs.end(),
+        [](Song& song) 
+        {
+            if (song.m_album == "[None]")
+            song.m_album = "";
+        });
+    
   }
 
   //try this...
-  std::ostream& operator<<(std::ostream& out, const Song& song)
+  std::ostream& operator<<(
+    std::ostream& out,
+    const Song& song)
   {
     out << song.m_title;
     return out;
   }
 
+  
+
   /*****************************************************************
   * receives the name of an artist as a parameter
   * returns the list of songs that artists available in collection
   *****************************************************************/
-  std::list<Song> SongCollection::getSongsForArtists(std::string artist) const
-  {
-    auto res = std::find_if(m_songs.begin(), m_songs.end(), [&artist](const Song& aSong)
-      {
-           return aSong.m_artist == artist;
-      });
-      std::list<Song> songs(cnt);
+  std::list<Song> 
+  SongCollection::getSongsForArtist(
+    const std::string& artist
+  ) const
+  { 
+      std::list<Song> songs;
 
-      std::copy_if(m_songs(), m_songs.end, songs.begin(), [&artist](const Song& aSong)
+      std::copy_if(
+          m_songs.begin(), 
+          m_songs.end(), 
+          std::back_inserter(songs), 
+          [&artist](const Song& aSong)
       {
          return aSong.m_artist == artist;
       });
