@@ -133,6 +133,13 @@ namespace seneca {
     });
   }
 
+  //try this...
+  std::ostream& operator<<(std::ostream& out, const Song& song)
+  {
+    out << song.m_title;
+    return out;
+  }
+
   /*****************************************************************
   * receives the name of an artist as a parameter
   * returns the list of songs that artists available in collection
