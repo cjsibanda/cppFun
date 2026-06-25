@@ -34,7 +34,7 @@ namespace seneca
     class Database
     {
         //private members
-        T m_numEntries;
+        T m_numEntries{0};
         std::string m_keys[20]{};
         std::T m_values[20]{};
         std::string m_filename;
@@ -45,7 +45,8 @@ namespace seneca
         // why is std::sharedPtr used?
         // why is std::unique_ptr NOT a good choice?
         //<--------------------------------------------
-        Database(std::sharedPtr);
+        inline static std::shared_ptr<Database<T>> m_instance{nullptr};
+
         /****************************************************************
         * A private constructor to prevent client from instatiating class
         * Prints to the screen the address of the current instance and prototype
@@ -59,26 +60,44 @@ namespace seneca
         Database(const std::string& filename) 
         {
             ///work on this...
-            std::cout << "The Database file?"
-            std::ifstream myfile(filename);
-            if (myfile.is_open())
+            std::cout << "[" this << "] Database(const std::string&)\n";
+            m_filename = filename;
+
+            std::ifstream file(filename);
+            if (file.is_open())
             {
-                m_numEntries = 0;
-                while(!myfile.eof() && numEntries < MAX_ENTRIES)
-                {
-                    //do something
-                    //do something else
-                    ++m_numEntries;
-                }
-                myfile.close();
+              std::string key;
+              T value;
+              while (m_numeEntries < 20 && file >> key >> value)
+              {
+                 //Replace underscores with single spaces
+                 std::replace(key.begin(), key.end(), '_', ' ');
+
+                 //Decrypt the value inline
+                 encryptDecrypt(value);
+
+                 m_keys[m_numEntries] = key;
+                 m_values[m_numEntries] = values;
+                 ++m_n_numEntries;
+              }
+              file.close();
             }
+
         }
+
+
         //empty body will specialize later
         void encryptDecrypt(T& value)
         {
             /* nothing */
         }
     public:
+      //Disable copy and move ops?
+      Database(const Database&) = delete;
+      Database& operator=(const Database&) = delete;
+      Database(Database&&) = delete;
+      Database& operator=(Database&&) = delete;
+
       /**************************************************
       *  A class function that will provide to the client
       * ... the one-and-only object of this type that is
@@ -89,7 +108,16 @@ namespace seneca
       ****************************************************/
       static std::shared_ptr<Databsase<T>> getInstance(const std::string& dbFileName)
       {
-        // 
+        if (!m_instance)
+        {
+          //std::make_shared cannot access private constructor directly
+          // can pass a custom token
+          struct AllocatorToken : public Database<T> {
+            AllocatorToken(const std::string& file) : Database<T>(file) {}
+          };
+          m_instance = std::make_shared<AllocatorToken>(dbFileName); 
+        }
+        return m_instance;
       }
 
       /*****************************************************
@@ -98,9 +126,17 @@ namespace seneca
       * if key is found return Err_Status::Err_Success
       * if key is not found, return Err_Status::Err_Notfound
       ******************************************************/
-      Err_status GetValue(const std::string& key, T& value)
+      Err_status GetValue(const std::string& key, T& value) const
       { 
-         //   
+         for (size_t i = 0; i < m_numEntries; ++i)
+         {
+          if (m_keys[i] == key)
+          {
+            value = m_values[i];
+            return Err_Status::Err_Success;
+          }
+         }
+         return Err_Status::Err_NotFound;
       }
 
       /*****************************************************************
@@ -111,7 +147,15 @@ namespace seneca
       ******************************************************************/
       Err_Status SetValue(const std::string& key, const T& value) 
       {
-        //
+        if (m_numEntries >= 20)
+        {
+          return Err_Status::Err_OutOfMemory;
+        }
+
+        m_keys[m_numEntries] = key;
+        m_values[m_numEntries] = value;
+        ++m_numEntries;
+        return Err_Status::Err_Success;
       }
 
 
@@ -133,33 +177,76 @@ namespace seneca
      ***********************************************************/
       ~Database()
       {
-        //YNWA
+        std::cout << "[" << this << "] ~Database()\n";
+
+        std::ofstream bkpFile(m_filename + ".bkp.txt");
+        if (bkpFile.is_open())
+        {
+          for (size_t i = 0; i < m_numEntries; ++i)
+          {
+            T encryptedVal = m_values[i];
+            encryptDecrypt(encryptedVal); //RE-encrypt for storage
+
+            bkpFile << std::left << std::setw(25) << m_keys[i]
+                    << " -> " << encryptedVal << "\n";
+          }
+          bkpFile.close();
+        }
       }
+    };
+
+      //Generic base implementation
+      template<typename T>
+      void Database<T>::encryptDecrypt(T& value) {/*YNWA*/}
 
       //specializations
       template<>
       inline void Database<std::string>::encryptDecrypt(std::string& value)
       {
+        /**********************************
+        fix this pseudo code
+        * [foreach character C in the parameter
+        *  foreach character K in the secret
+        *   C = C ^ K
+        ***********************************/
         const char secret[]{ "secret encrytion key "};
+        const size_t secretLen = sizeof(secret) - 1;
+
+        for (char& c : value)
+        {
+          for (size_t i = 0; i < secretLen; ++i)
+          {
+            c ^= secret[i];
+          }
+
+        }
+
         
-        //fix this pseudo code
-        foreach character C in the parameter
-          foreach character K in the secret
-            C = C ^ K
       }
 
       template<>
       inline void Database<long long>::encryptDecrypt(long long& value)
       {
         const char secret[]{ "super secret encryption key" };
+        const size_t secretLen = sizeof(secret) - 1;
+        char* bytes = reinterpret_cast<char*>(&value);
 
-        foreach byte B in the parameter
-          foreach character K in the secret
-             B = B ^ K 
+        /**********************************
+        * Fix this pseudo code
+        * foreach byte B in the parameter
+        *   foreach character K in the secret
+        *      B = B ^ K 
+        **************************************/
+       for (size_t b = 0; b < sizeof(long long); ++b)
+       {
+          for (size_t i = 0; i < secretLen; ++i)
+          {
+            bytes[b] ^= secret[i];
+          }
+        
       }
 
-      template<typename T>
-      std::shared_ptr<Database<T>> Database<T>::instance{};
+      
     }
 }
 #endif
