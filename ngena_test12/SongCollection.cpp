@@ -44,8 +44,9 @@ namespace seneca {
        if (!file)
              throw "Invalid filename!";
 
-       //this needs work??!!
-       while (file)
+       //????
+       std::string line;
+       while (std::getline(file, line))
        {
         Song song;
         std::string line;
@@ -62,9 +63,21 @@ namespace seneca {
         song.m_artist = trim(line.substr(25, 25));
         song.m_album = trim(line.substr(50, 25));
         
-        //year = trim(year);
-        //length = trim(length);
-        //price = trim(price);
+        m_songs.push_back(song);
+
+
+        std::string year = trim(line.substr(75, 5));
+        std::string length = trim(line.substr(80, 5));
+        std::string price = trim(line.substr(85, 5));
+
+        if (!year.empty())
+           song.m_releaseYear = std::stoi(year);
+
+        song.m_songLength = std::stoul(length);
+        song.m_price = std::stod(price);
+
+        
+        
         if (file)
         {
             //------------------>
@@ -74,11 +87,11 @@ namespace seneca {
             //<--------------------
             
             //song.m_songLength = std::stoul(length);
-            song.m_songLength = 0;
+            //song.m_songLength = 0;
 
             //song.m_price = std::stod(price);
-            song.m_price = 0;
-            this->m_songs.push_back(song);
+            //song.m_price = 0;
+            m_songs.push_back(song);
         }
        }
        file.close();
