@@ -1,0 +1,21 @@
+------------------------------------------------------
+STL ALGORITHIMS REFLECTION:
+-----------------------------------------------------
+
+- How do you copy data from a filie into a sequntial container?
+- What is a sequential container?
+- How did we use numberic library to accumulate data values?
+- How did we use lambda expression to specify an operation on each value in the data set?
+- how did we use algorithm library to sort data values?
+- what other tests can be written for test?
+- how do you write tests in tester file?
+- 
+-------------
+- List all the STL functions that you have used... explain the 
+reasoning for chossing each one, and not antoher?
+- present the advantages of using STL algorithm vs implementing the functionality
+by yourself using loops
+- The function that sorts the collection of songs receives as a parameter the fieldname to
+use: this can create errors if the client specifies an invalis field (or misspells it).
+How would you redesign that function to prevent the client to specify an invalid string,
+allowing any error to be detected by the compiler
