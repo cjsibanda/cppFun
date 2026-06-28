@@ -198,12 +198,34 @@ namespace seneca {
     
   }
 
-  //try this...
+  
   std::ostream& operator<<(
     std::ostream& out,
     const Song& song)
   {
-    out << song.m_title;
+    //example from tester_1 file...
+    //out << std::setw(89) << std::setfill('-') << '\n' << std::setfill(' ');
+    /////////////////////////
+    // what I'm looking for...
+    // | TITLE(20) | ARTIST(15) | ALBUM(20) | YEAR(6) | LENGTH | PRICE |
+    // should look like this...
+    //|Bird Set Free  | Sia | This is Acting | 2016 | 4.12  | 1.21
+    //    
+    /*******************************************************************
+    out << "| " << song.m_title
+        << setw(2) << "| " << song.m_artist
+        << setw(2) << "| " << song.m_album  
+        << setw(2) << "| " << song.releaseYear 
+        << setw(2) << "| " << song.m_songLength
+        << setw(2) << "| " << song.m_price;
+    ********************************************************************/ 
+    //out << song.m_title;  //this works for now, not quite right format
+    out << "|"  << song.m_title 
+        << "| " << song.m_album
+        << "| " << song.m_releaseYear
+        << "| " << song.m_songLength
+        << "| " << song.m_price;
+    //keep this...
     return out;
   }
 
