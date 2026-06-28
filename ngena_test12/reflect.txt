@@ -13,9 +13,30 @@ STL ALGORITHIMS REFLECTION:
 -------------
 - List all the STL functions that you have used... explain the 
 reasoning for chossing each one, and not antoher?
+
+--------------------------------------------------------------------------------
 - present the advantages of using STL algorithm vs implementing the functionality
 by yourself using loops
+---------------------------------------------------------------------------------
+- readability and clarity
+- less error prone and safer
+- better perfume/highly optimized
+- generic and reusbale design
+
+STL algoritms improve readability and correctness
+by expressing intent clearly
+for example std::sort directly shows sorting,
+it doesn't hide logi inside manual loops. They are
+also safer and less error prone, since they are
+well-tested and avoid common bugs like off-by-one 
+errors. Also, they are typically more efficient
+and reusable, working across containers
+via iterators without code.
+
+
+------------------------------------------------------------------------------------------
 - The function that sorts the collection of songs receives as a parameter the fieldname to
 use: this can create errors if the client specifies an invalis field (or misspells it).
 How would you redesign that function to prevent the client to specify an invalid string,
 allowing any error to be detected by the compiler
+-------------------------------------------------------------------------------------------
