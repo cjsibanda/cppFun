@@ -49,50 +49,21 @@ namespace seneca {
        while (std::getline(file, line))
        {
         Song song;
-        std::string line;
-        std::getline(file, line);
-        /******************************************
-        *    TITLE   = 25 chars
-        *    ARTIST  = 25 chars
-        *    ALBUM   = 25 chars
-        *    YEAR    = 5 chars
-        *    LENGTH  = 5 chars
-        *    PRICE   = 5 chars
-        *******************************************/
-        song.m_title = trim(line.substr(0, 25));
-        song.m_artist = trim(line.substr(25, 25));
-        song.m_album = trim(line.substr(50, 25));
-        
-        m_songs.push_back(song);
 
+        song.m_title = trim(line.substr(0,25));
+        song.m_artist = trim(line.substr(25,25));
+        song.m_album = trim(line.substr(50, 25));
 
         std::string year = trim(line.substr(75, 5));
         std::string length = trim(line.substr(80, 5));
-        std::string price = trim(line.substr(85, 5));
+        std::string price = trim(line.substr(85));
 
-        if (!year.empty())
-           song.m_releaseYear = std::stoi(year);
-
+        song.m_releaseYear = year.empty() ? 0 : std::stoi(year);
         song.m_songLength = std::stoul(length);
         song.m_price = std::stod(price);
 
-        
-        
-        if (file)
-        {
-            //------------------>
-            //song.m_title;
-            //song.m_artist;
-            //song.m_album;
-            //<--------------------
-            
-            //song.m_songLength = std::stoul(length);
-            //song.m_songLength = 0;
+        m_songs.push_back(song);
 
-            //song.m_price = std::stod(price);
-            //song.m_price = 0;
-            m_songs.push_back(song);
-        }
        }
        file.close();
 
@@ -202,32 +173,33 @@ namespace seneca {
   std::ostream& operator<<(
     std::ostream& out,
     const Song& song)
-  {
-    //example from tester_1 file...
-    //out << std::setw(89) << std::setfill('-') << '\n' << std::setfill(' ');
-    /////////////////////////
-    // what I'm looking for...
-    // | TITLE(20) | ARTIST(15) | ALBUM(20) | YEAR(6) | LENGTH | PRICE |
-    // should look like this...
-    //|Bird Set Free  | Sia | This is Acting | 2016 | 4.12  | 1.21
-    //    
-    /*******************************************************************
-    out << "| " << song.m_title
-        << setw(2) << "| " << song.m_artist
-        << setw(2) << "| " << song.m_album  
-        << setw(2) << "| " << song.releaseYear 
-        << setw(2) << "| " << song.m_songLength
-        << setw(2) << "| " << song.m_price;
-    ********************************************************************/ 
-    //out << song.m_title;  //this works for now, not quite right format
-    out << "|"  << song.m_title 
-        << "| " << song.m_album
-        << "| " << song.m_releaseYear
-        << "| " << song.m_songLength
-        << "| " << song.m_price;
-    //keep this...
+  { 
+    
+    int min = song.m_songLength / 60;
+    int sec = song.m_songLength % 60;
+
+    out << "| "
+        << std::left << std::setw(20) << song.m_title << " | "
+        << std::setw(15) << song.m_artist << " | "
+        << std::setw(20) << song.m_album << " | "
+        << std::right << std::setw(6);
+
+    if (song.m_releaseYear != 0)
+        out << song.m_releaseYear;
+    else
+        out << "";
+
+    out << " | "
+        << min << ":"
+        << std::setw(2) << std::setfill('0') << sec
+        << std::setfill(' ') << " | "
+        << std::fixed << std::setprecision(2)
+        << song.m_price << " |";
+
     return out;
+
   }
+    
 
   
 
