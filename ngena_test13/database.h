@@ -18,7 +18,7 @@ namespace seneca
     ***********************************************/
     enum class Err_Status
     {
-        Err_Sucess,
+        Err_Success,
         Err_NotFound,
         Err_OutOfMemory
     };
@@ -36,7 +36,7 @@ namespace seneca
         //private members
         T m_numEntries{0};
         std::string m_keys[20]{};
-        std::T m_values[20]{};
+        T m_values[20]{};
         std::string m_filename;
         //-------------------------------------------->
         // A class variable (a static attribute) 
@@ -45,7 +45,8 @@ namespace seneca
         // why is std::sharedPtr used?
         // why is std::unique_ptr NOT a good choice?
         //<--------------------------------------------
-        inline static std::shared_ptr<Database<T>> m_instance{nullptr};
+        //inline static std::shared_ptr<Database<T>> m_instance{nullptr};
+        static std::shared_ptr<Database<T>> m_instance{nullptr};
 
         /****************************************************************
         * A private constructor to prevent client from instatiating class
@@ -60,7 +61,7 @@ namespace seneca
         Database(const std::string& filename) 
         {
             ///work on this...
-            std::cout << "[" this << "] Database(const std::string&)\n";
+            //std::cout << "[" this  << "] Database(const std::string&)\n";
             m_filename = filename;
 
             std::ifstream file(filename);
@@ -68,7 +69,7 @@ namespace seneca
             {
               std::string key;
               T value;
-              while (m_numeEntries < 20 && file >> key >> value)
+              while (m_numEntries < 20 && file >> key >> value)
               {
                  //Replace underscores with single spaces
                  std::replace(key.begin(), key.end(), '_', ' ');
@@ -77,8 +78,8 @@ namespace seneca
                  encryptDecrypt(value);
 
                  m_keys[m_numEntries] = key;
-                 m_values[m_numEntries] = values;
-                 ++m_n_numEntries;
+                 m_values[m_numEntries] = value;
+                 ++m_numEntries;
               }
               file.close();
             }
@@ -106,7 +107,7 @@ namespace seneca
       * returbs static attribute if Database class instantiated
       * creates instance of type Database if NOT instatiated 
       ****************************************************/
-      static std::shared_ptr<Databsase<T>> getInstance(const std::string& dbFileName)
+      static std::shared_ptr<Database<T>> getInstance(const std::string& dbFileName)
       {
         if (!m_instance)
         {
@@ -126,7 +127,7 @@ namespace seneca
       * if key is found return Err_Status::Err_Success
       * if key is not found, return Err_Status::Err_Notfound
       ******************************************************/
-      Err_status GetValue(const std::string& key, T& value) const
+      Err_Status GetValue(const std::string& key, T& value) const
       { 
          for (size_t i = 0; i < m_numEntries; ++i)
          {
