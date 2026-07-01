@@ -1,0 +1,27 @@
+------------------------------------
+QUESTIIONS
+-------------------------------------
+1. Why could we NOT use a unique_ptr in your Database class?
+------------------------------------------------------------
+
+-> We could not use a std::unique_ptr because getInstance()
+returns the singleton object to multiple parts of the program,
+and several variables may need to share ownership of the Same
+Database object. A shared_ptr allows multiple shared references
+to the same instance while ensuring the object is destroyed
+automatically when the last reference goes out of scope 
+
+------------------------------------------------------------
+2. A class that only allows one instance to be created is 
+called a singleton. Can you think of another way to create
+a signleton without using static members. how would that object be
+managed?
+--------------------------------------------------------------
+
+-> Yes... Instead of using a static member inside the class, the
+singleton object could be created and managed by another class or 
+a dependency injection container that owns the object and passes it to
+any code that needs it. In this design, the external manager is responsible
+for ensuring that only one instance exists and for controlling its lifetime.
+
+
