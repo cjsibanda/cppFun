@@ -34,7 +34,7 @@ namespace seneca
     class Database
     {
         //private members
-        T m_numEntries{0};
+        size_t m_numEntries{0};
         std::string m_keys[20]{};
         T m_values[20]{};
         std::string m_filename;
@@ -46,7 +46,7 @@ namespace seneca
         // why is std::unique_ptr NOT a good choice?
         //<--------------------------------------------
         //inline static std::shared_ptr<Database<T>> m_instance{nullptr};
-        static std::shared_ptr<Database<T>> m_instance{nullptr};
+        static std::shared_ptr<Database<T>> m_instance;
 
         /****************************************************************
         * A private constructor to prevent client from instatiating class
@@ -88,10 +88,7 @@ namespace seneca
 
 
         //empty body will specialize later
-        void encryptDecrypt(T& value)
-        {
-            /* nothing */
-        }
+        void encryptDecrypt(T& value);
     public:
       //Disable copy and move ops?
       Database(const Database&) = delete;
@@ -104,7 +101,7 @@ namespace seneca
       * ... the one-and-only object of this type that is
       * allowed to exist
       * receives filename representing string as parameter
-      * returbs static attribute if Database class instantiated
+      * returns static attribute if Database class instantiated
       * creates instance of type Database if NOT instatiated 
       ****************************************************/
       static std::shared_ptr<Database<T>> getInstance(const std::string& dbFileName)
@@ -198,9 +195,13 @@ namespace seneca
 
       //Generic base implementation
       template<typename T>
-      void Database<T>::encryptDecrypt(T& value) {/*YNWA*/}
+      void Database<T>::encryptDecrypt(T& value) { /*YNWA*/ }
 
-      //specializations
+
+      template<typename T>
+      std::shared_ptr<Database<T>>
+      Database<T>::m_instance = nullptr;
+
       template<>
       inline void Database<std::string>::encryptDecrypt(std::string& value)
       {
@@ -208,7 +209,8 @@ namespace seneca
         fix this pseudo code
         * [foreach character C in the parameter
         *  foreach character K in the secret
-        *   C = C ^ K
+        *specializations
+      te   C = C ^ K
         ***********************************/
         const char secret[]{ "secret encrytion key "};
         const size_t secretLen = sizeof(secret) - 1;
