@@ -1,18 +1,90 @@
 ------------------------------------------------------
 STL ALGORITHIMS REFLECTION:
 -----------------------------------------------------
-
+----------------------------------------------------------------
 - How do you copy data from a filie into a sequntial container?
+----------------------------------------------------------------
+1. Open the file using the std::ifstream
+2. Read each line with std::getline()
+3. Create a Song object from the line
+4. Add it to a std::vector using push_back()
+
+---------------------------------------------------------------
 - What is a sequential container?
-- How did we use numberic library to accumulate data values?
+---------------------------------------------------------------
+- A sequntial Container stores elements in order
+- Elements are accessed one after another
+- Examples are std::vector, std::list and std::deque
+
+------------------------------------------------------------
+- How did I use numberic library to accumulate data values?
+-------------------------------------------------------------
+- I used std::accumulate()
+- It added the length of every song together
+- This gave the total listening time
+
+----------------------------------------------------------------------------------------
 - How did we use lambda expression to specify an operation on each value in the data set?
+-----------------------------------------------------------------------------------------
+- I passed lambda functions to STL algoritms
+- The lambda told the algoritm what to do with each song
+- for example, printing sonbgs or changing album names
+
+---------------------------------------------------------
 - how did we use algorithm library to sort data values?
+----------------------------------------------------------
+- I used std::sort().
+- A lambda compared two songs
+- The songs were sorted by title, album, or length.
+
+----------------------------------------------------------
 - what other tests can be written for test?
+----------------------------------------------------------
+- Test an empty collection
+- Test a file with one song
+- Test searching for an artist that does not exists
+- Test sorting by every valid field
+- Test that cleanAlbum() removes all [None] values
+
+---------------------------------------------------------
 - how do you write tests in tester file?
-- 
--------------
+---------------------------------------------------------
+- Create objects with different input files
+- call the class functions
+- Compare the output with the expected results
+- Check that each function works correctly
+
+
+---------------------------------------------------------------
 - List all the STL functions that you have used... explain the 
 reasoning for chossing each one, and not antoher?
+---------------------------------------------------------------
+----- std::for_each() --------------------
+- Used it to display songs and clean album names.
+- I chose it because it performs an action on every elements
+without writting loops
+
+-------- std::sort() -------------------------
+- used to sort songs
+- I chose it because it is faster and simpler than writing A
+sorting algorithm manually
+
+------ std::accumulate() ----------------------
+- Used to calculate the total listening time
+- I chose it because it adds values in one function call
+
+----- std::find_if() ---------------------------
+- Used to check if an artist exists in the collection
+- I chose it because it stops searching as soon as a match is found
+
+------- std::copy_if() ---------------------
+- Used to copy songs by one artist into a list
+- I chose it because it copies only the matching elements
+
+----- std::back_inserter() --------
+- Used with copy_if()
+- I chose it because it automatically adds copied songs to end of the list
+
 
 --------------------------------------------------------------------------------
 - present the advantages of using STL algorithm vs implementing the functionality
@@ -40,3 +112,14 @@ use: this can create errors if the client specifies an invalis field (or misspel
 How would you redesign that function to prevent the client to specify an invalid string,
 allowing any error to be detected by the compiler
 -------------------------------------------------------------------------------------------
+----- How I would redifine the sort function?? ------
+
+- Instead of passing a string, use an enum...
+for example: enum class SortField { Title, Album, Length};
+
+- The the function becomes
+void sort(SortField field);
+
+-- This prevents spelling mistakes because the compiler
+checks the valid options before the program runs.
+
