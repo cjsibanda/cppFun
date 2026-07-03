@@ -5,8 +5,9 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
-#include <memory>
 #include <string>
+#include <memory>
+
 
 namespace seneca
 {
@@ -235,7 +236,7 @@ namespace seneca
         char* bytes = reinterpret_cast<char*>(&value);
 
         /**********************************
-        * Fix this pseudo code
+        *  pseudo code
         * foreach byte B in the parameter
         *   foreach character K in the secret
         *      B = B ^ K 
