@@ -11,10 +11,13 @@
 * Contains the functionality regaerding the configuration
 * of the application. 
 *********************************************************/
-struct Settings 
+namespace seneca 
 {
-    int m_maxSummaryWidth{80};
-    bool m_tableView{false};
-    //YNWA
+  struct Settings 
+  {
+      int m_maxSummaryWidth{80};
+      bool m_tableView{false};
+      //YNWA
+  };
 }
 #endif
