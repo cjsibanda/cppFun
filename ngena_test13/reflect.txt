@@ -1,6 +1,40 @@
 ------------------------------------
 QUESTIIONS
 -------------------------------------
+---------------------------------------------------------------
+- What is meant by a program component of quadratic complexity?
+---------------------------------------------------------------
+A program component has quadratic complexity when its running
+time grows with the square of the input size, written as O(n^2).
+This often happens when one loop is nested inside another,
+ causing the work to increase quickly as the input gets 
+ larger.
+
+---------------------------------------------------------------
+- how do you use a smart pointer to move an object?
+---------------------------------------------------------------
+You can move ownership of an object by using std::move() 
+with a smart pointer. After the move, the original smart 
+pointer no longer owns the object, and the new smart 
+pointer becomes its owner.
+
+----------------------------------------------------------------
+- what is an enumeration?
+----------------------------------------------------------------
+An enumeration (enum) is a user-defined type that contains
+ a fixed set of named constants. It makes code easier to 
+ read and reduces errors by giving meaningful names to
+  values.
+
+--------------------------------------------------------------------
+- What is the difference between std::shared_ptr and std::unqiue_ptr
+--------------------------------------------------------------------
+A std::unique_ptr has only one owner and cannot be copied,
+only moved. A std::shared_ptr allows multiple objects to
+share ownership of the same resource and automatically
+deletes it when the last owner is destroyed.
+
+------------------------------------------------------------
 1. Why could we NOT use a unique_ptr in your Database class?
 ------------------------------------------------------------
 
@@ -24,4 +58,71 @@ a dependency injection container that owns the object and passes it to
 any code that needs it. In this design, the external manager is responsible
 for ensuring that only one instance exists and for controlling its lifetime.
 
+----------------------------------------------------------------------------
+3. The class Database has a resource attribute (the database instance), yet
+no copy/move operations were implemented. Is that a bug (justify your answer)?  
+----------------------------------------------------------------------------
+No. A singleton should never be copied or moved because that
+could create additional instances of the class. Deleting the
+copy and move operations is the correct design since only
+one Database object is allowed to exist.
 
+------------------------------------------------------------------------------
+4. the class Database can be instantiated only once, yet in the output we see 
+that the custom constructor is called twice (same for the destructor). Explain
+------------------------------------------------------------------------------
+The constructor is called twice because there are two
+different template specializations: Database<std::string>
+and Database<long long>. Each specialization is treated
+as a separate class, so each one has its own singleton 
+instance and its own constructor and destructor.
+
+------------------------------------------------------------------
+- what doe this code do?
+
+{
+		// getInstance() creates an object of type Database
+		//   if that object does not already exist.
+		// If that object already exists, getInstance will
+		//   return that object.
+		// The parameter is useful only in the first call,
+		//   after that it should have no impact.
+
+		std::cout << ">>>  T1: Singleton\n";
+		std::cout << "==========:==========:==========:==========:==========\n";
+		void* db1 = seneca::Database<std::string>::getInstance(argv[1]).get();
+		void* db2 = seneca::Database<long long>::getInstance(argv[2]).get();
+		void* db3 = seneca::Database<std::string>::getInstance("nothing").get();
+		void* db4 = seneca::Database<long long>::getInstance("nothing").get();
+
+		std::cout << (db1 == db3 ? "Same" : "Different") << " database.\n";   // Same
+		std::cout << (db2 == db4 ? "Same" : "Different") << " database.\n";   // Same
+		std::cout << (db1 == db2 ? "Same" : "Different") << " database.\n";   // Different
+		std::cout << (db1 == db4 ? "Same" : "Different") << " database.\n";   // Different
+		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
+	}
+
+------------------------------------------------------------------
+
+- This code tests whether the Database class correctly 
+implements the Singleton pattern. It checks that only one
+object is created for each template type and that every
+later call to getInstance() returns the same object.
+- First two calls: getInstance(argv[1]) creates the
+Database<std::string> object, and getInstance(argv[2])
+creates the Database<long long> object. These are 
+different objects because they are different template
+specializations.
+- Second two calls: getInstance("nothing") is called again
+for both template types. The filename is ignored because
+each singleton object has already been created, so the
+existing object is returned instead.
+- Pointer comparisons: The addresses stored in db1 and db3
+should be the same, and db2 and db4 should also be the 
+same. However, db1 and db2 (and db1 and db4) should be
+different because they belong to different template
+specializations.
+- Conclusion: The expected output proves that each template
+specialization has its own singleton object. It also 
+confirms that repeated calls to getInstance() return the 
+same object instead of creating a new one.
