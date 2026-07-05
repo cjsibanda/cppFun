@@ -6,6 +6,11 @@
 
 namespace seneca
 {
+	/****************************************************
+	* Provided --> Contains information about a generic
+	* multimedia item
+	* Study code and make sure I understand!!
+	***************************************************/
 	class MediaItem
 	{
 		std::string m_title{};

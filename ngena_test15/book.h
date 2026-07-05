@@ -7,6 +7,12 @@
 
 namespace seneca
 {
+    /**************************************************
+    * Book class is derived from MediaItem that can store
+    * information (for each attribute, chose any type
+    * that you think is appropriate) - be able to justiy
+    * decisions.
+    ****************************************************/
     class Book 
     {
         std::string m_author{}
