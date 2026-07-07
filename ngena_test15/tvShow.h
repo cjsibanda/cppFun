@@ -1,24 +1,17 @@
 #ifndef SENECA_TVSHOW_H
 #define SENECA_TVSHOW_H
 
+#include <iostream>
 #include <vector>
 #include <string>
 #include <list>
-#include <ostream>
+#include <numeric>
+
+#include "medialtem.h"
 
 namespace seneca 
 {
-
-
-    class TvShow
-    {
-        /*****************************************************
-        *  TvShow class stores the information for a TV show
-        * m_id, title (inherited), release year (inherited)
-        * the summary (inherited), m_epsiode
-        ******************************************************/
-
-        //inside or outside class?
+    //inside or outside class?
         struct TvEpisode
         {
             const TvShow* m_show{};
@@ -31,6 +24,25 @@ namespace seneca
             std::string m_summary{};
         };
 
+
+
+    class TvShow
+    {
+        /*****************************************************
+        *  TvShow class stores the information for a TV show
+        * m_id, title (inherited), release year (inherited)
+        * the summary (inherited), m_epsiode
+        ******************************************************/
+        std::string m_id{};
+        std::list<TVEpisode> m_episode{};
+
+        TvShow(
+            const std::string& id,
+            const std::string& title,
+            unsigned short year,
+            const std::string& summary
+        );
+        
         //add necessary constructors
         //constructors are private
     public:
@@ -46,7 +58,7 @@ namespace seneca
         * the client. The parameter contains a single line of text extracted
         * from the file tvShows.csv.
         ******************************************************************/
-        TvShow* createItem(const std::string& strShow);
+        static TvShow* createItem(const std::string& strShow);
 
         /*************************************************************
         * a class function that function builds an episode with the
@@ -56,6 +68,99 @@ namespace seneca
         ***************************************************************/
         template<typename Collection_t>
         void addEpisode(Collection_t& col, const std::string& strEpisode)
+        {
+            if (strEpisode.empty() || strEpisode[0] == '#')
+                throw "Not a valid episode.";
+
+
+            std::string tokens[8];
+
+            size_t start = 0;
+            size_t end = 0;
+
+
+            for (int i = 0; i < 7; i++)
+            {
+                end = strEpisode.find(',', start);
+
+                tokens[i] =
+                    strEpisode.substr(
+                        start,
+                        end - start
+                    );
+
+                trim(tokens[i]);
+
+                start = end + 1;
+            }
+
+
+            tokens[7] =
+                strEpisode.substr(start);
+
+            trim(tokens[7]);
+
+
+            for (unsigned int i = 0;
+                 i < col.size();
+                 ++i)
+            {
+                TvShow* show =
+                    dynamic_cast<TvShow*>(col[i]);
+
+
+                if (show &&
+                    show->m_id == tokens[0])
+                {
+
+                    TvEpisode ep;
+
+                    ep.m_show = show;
+
+                    ep.m_numberOverall =
+                        static_cast<unsigned short>(
+                            std::stoi(tokens[1]));
+
+
+                    ep.m_season =
+                        tokens[2].empty()
+                        ?
+                        1
+                        :
+                        static_cast<unsigned short>(
+                            std::stoi(tokens[2]));
+
+
+                    ep.m_numberInSeason =
+                        static_cast<unsigned short>(
+                            std::stoi(tokens[3]));
+
+
+                    ep.m_airDate = tokens[4];
+
+
+                    ep.m_length =
+                        static_cast<unsigned int>(
+                            std::stoi(tokens[5]));
+
+
+                    ep.m_title = tokens[6];
+
+                    ep.m_summary = tokens[7];
+
+
+                    show->m_episodes.push_back(ep);
+
+                    return;
+                }
+            }
+
+
+            throw std::string(
+                "Show not found: "
+                + tokens[0]);
+        }
+
 
         // get the avg length in seconds of the episode
         //MUST accomplish this using STL Algorithms and NO manual loops
