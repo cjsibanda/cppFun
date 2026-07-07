@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector> //??
 #include <string>
+#include "mediaItem.h"
 
 namespace seneca
 {
@@ -13,22 +14,27 @@ namespace seneca
     * that you think is appropriate) - be able to justiy
     * decisions.
     ****************************************************/
-    class Book 
+    class Book : public MediaItem
     {
-        std::string m_author{}
-        //title inherited
+        std::string m_author{};
         std::string m_country{};
-        //year of publication inherited
-        double m_price //price of the book
-        //the summary (inherited): a short description of the book
-        Book(),
-        //other constructors needed?
+        double m_price{};
+
+        Book(
+            const std::string& author,
+            const std::string& title,
+            const std::string& country,
+            double price,
+            unsigned short year,
+            const std::string& summary
+        );
+
     public:
         /*************************************
         *  Override this function
         * to print info about single book
         *************************************/
-        void display(std::ostream& out) const;
+        void display(std::ostream& out) const override;
         /***********************************************
         *  a class function that receives as a parameter
         * the representation of the book as a string and 
@@ -39,7 +45,7 @@ namespace seneca
         * from books.csv. line should have the following format
         * *** AUTHOR,TITLE,COUNTRY,PRICE,YEAR,SUMMARY ***
         ************************************************/
-       Book* createItem(const std::string& strBook)
+       static Book* createItem(const std::string& strBook)
 
     }
 
