@@ -3,8 +3,7 @@
 
 #include <vector>
 #include <string>
-#include <list>
-#include <ostream>
+#include <iostream>
 
 namespace seneca 
 {
@@ -16,8 +15,13 @@ namespace seneca
     * title (inherited), the year of release(inherited), 
     * the summary (inherited)
     ****************************************************/
-    class Movie 
+    class Movie : public MediaItem
     {
+        Movie(
+            const std::string& title,
+            unsigned short year,
+            const std::string& summary
+        );
        ///title (inherited)
        //the year of release (inherited)
        // the summary (inherited)
@@ -37,9 +41,10 @@ namespace seneca
         * using information from the string and returns it to
         * the client.
         ******************************************/
-        Movie* createItem(std::string& strMovie)
+        static Movie* createItem(const std::string& strMovie)
      
-    }
+    };
 
 
 }
+#endif
