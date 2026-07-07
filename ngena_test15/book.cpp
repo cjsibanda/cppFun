@@ -11,6 +11,7 @@
 #include <string>
 
 #include "book.h"
+#include "settings.h"
 
 namespace seneca {
     /***************************************************
@@ -22,7 +23,22 @@ namespace seneca {
 
     //constructors are PRIVATE!
     //add any contructors that are nessecary for design
-   Book::Book() {}; //constructor
+   Book::Book(
+      const std::string& author,
+      const std::string& title,
+      const std::string& country,
+      double price,
+      unsigned short year,
+      const std::string& summary
+   ) 
+     :
+     MediaItem(title, summary, year),
+     m_author(author),
+     m_country(country),
+     m_price(price)
+     {
+
+     }
 
    //<------------------------------------------------------------
    // display code is provided
@@ -94,8 +110,46 @@ namespace seneca {
     *******************************************************/
     Book::Book* createItem(const std::string& strBook) 
     {
-      //Let's go Sables!
+      if (strBook.empty() || strBook[0] == '#')
+            throw "Not a valid book.";
+
+
+        std::string tokens[6];
+
+        size_t start = 0;
+        size_t end = 0;
+
+
+        for (int i = 0; i < 5; i++)
+        {
+            end = strBook.find(',', start);
+
+            tokens[i] =
+                strBook.substr(start, end - start);
+
+            trim(tokens[i]);
+
+            start = end + 1;
+        }
+
+
+        tokens[5] =
+            strBook.substr(start);
+
+        trim(tokens[5]);
+
+
+        return new Book(
+            tokens[0],
+            tokens[1],
+            tokens[2],
+            std::stod(tokens[3]),
+            static_cast<unsigned short>(std::stoi(tokens[4])),
+            tokens[5]
+        );
     }
+
+    
 
 
 
