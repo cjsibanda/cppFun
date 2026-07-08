@@ -35,10 +35,12 @@ namespace seneca {
     **********************************/
     SpellChecker(const char* filename);
 
+    //<---------------------------------------------
     //operator that searches text and
     //replaces misspelled words with correct
     //version. Count how many times each mispelled
     //word has been replaced
+    //<------------------------------------------------
     void operator()(std::string& text);
 
     /*******************************************
