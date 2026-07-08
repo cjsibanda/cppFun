@@ -7,6 +7,8 @@
 #include <string>
 
 #include "tvShow.h"
+#include "settings.h"
+
 
 namespace seneca
 {
@@ -14,7 +16,16 @@ namespace seneca
     * TvShow that stores information for a tv show
     * m_id, title, year of release, the summary, m_episods
     ******************************************************/
-    //???
+    TvShow::TvShow(
+      const std::string& id;
+      const std::string& title,
+      unsigned short year,
+      const std::string& summary
+    )
+      : MediaItem(title, summary, year),
+      m_id(id)
+     {
+     } 
 
     /*****************************************************
     * override this function to print the information
@@ -88,7 +99,38 @@ namespace seneca
     *****************************************************/
     TvShow* TvShow::createItem(const std::string& strShow)
     {
-        //YNWA
+        if (strShow.empty() || strShow[0] == '#')
+           throw "Not a valid show.";
+
+        std::string tokens[4];
+
+        size_t start = 0;
+        size_t end = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+          end = strShow.find(',', start);
+
+          token[i] = strShow.substr(start, end - start);
+
+          trim(tokens[i]);
+          start = end + 1;
+        }
+
+        tokens[3] = strShow.substr(start);
+
+        trim(tokens[3]);
+
+        return new TvShow(
+          tokens[0],
+          tokens[1],
+          static_cast<unsigned short>(
+              std::stoi(token[2])
+          ),
+          tokens[3]
+        );
+
+
     }
 
     /*************************************************
@@ -104,6 +146,7 @@ namespace seneca
     template<typename Collection_t>
     void addEpisode(Collection_t& col, const std::string& strEpisode)
     {
+      ////
 
     }
 
@@ -113,6 +156,20 @@ namespace seneca
     //lambda should not capture anything from the contest by reference
     double TvShow::getEpsiodeAverageLength() const
     {
+      if (m_episode.empty())
+         return 0;
+      
+      unsigned int total = std::accumulate(
+        m_episodes.begin(),
+        m_episode.end(),
+        0u,
+        [](unsigned int sum, const TvEpisode& ep)
+        {
+          return sum + ep.m_length;
+        }
+      );
+
+      return static_cast<double>(total)/m_episodes.size();
 
     }
 
