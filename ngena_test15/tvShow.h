@@ -12,11 +12,12 @@
 
 namespace seneca 
 {
+    class TvShow; //<-- forwared declaration so compiler knwows it exist
     //inside or outside class?
         struct TvEpisode
         {
             const TvShow* m_show{};
-            unsigned short m_numberOverrall{};
+            unsigned short m_numberOverall{};
             unsigned short m_season{};
             unsigned short m_numberInSeason{};
             std::string m_airDate{};
@@ -27,7 +28,7 @@ namespace seneca
 
 
 
-    class TvShow
+    class TvShow : public MediaItem
     {
         /*****************************************************
         *  TvShow class stores the information for a TV show
@@ -35,7 +36,7 @@ namespace seneca
         * the summary (inherited), m_epsiode
         ******************************************************/
         std::string m_id{};
-        std::list<TVEpisode> m_episode{};
+        std::list<TvEpisode> m_episodes{};
 
         TvShow(
             const std::string& id,
@@ -50,7 +51,7 @@ namespace seneca
         /********************************************************
         * override this function to print info about single book
         *********************************************************/
-        void display(std::ostream& out) const override
+        void display(std::ostream& out) const override;
 
         /*****************************************************************
         * class function that receives as a parameter the representation
@@ -68,14 +69,12 @@ namespace seneca
         * episodes of the found show.
         ***************************************************************/
         template<typename Collection_t>
-        void addEpisode(Collection_t& col, const std::string& strEpisode)
+        static void addEpisode(Collection_t& col, const std::string& strEpisode)
         {
             if (strEpisode.empty() || strEpisode[0] == '#')
                 throw "Not a valid episode.";
 
-
             std::string tokens[8];
-
             size_t start = 0;
             size_t end = 0;
 
@@ -83,15 +82,12 @@ namespace seneca
             for (int i = 0; i < 7; i++)
             {
                 end = strEpisode.find(',', start);
-
                 tokens[i] =
                     strEpisode.substr(
                         start,
                         end - start
                     );
-
                 trim(tokens[i]);
-
                 start = end + 1;
             }
 
@@ -115,13 +111,10 @@ namespace seneca
                 {
 
                     TvEpisode ep;
-
                     ep.m_show = show;
-
                     ep.m_numberOverall =
                         static_cast<unsigned short>(
                             std::stoi(tokens[1]));
-
 
                     ep.m_season =
                         tokens[2].empty()
@@ -131,27 +124,18 @@ namespace seneca
                         static_cast<unsigned short>(
                             std::stoi(tokens[2]));
 
-
                     ep.m_numberInSeason =
                         static_cast<unsigned short>(
                             std::stoi(tokens[3]));
 
-
                     ep.m_airDate = tokens[4];
-
-
                     ep.m_length =
                         static_cast<unsigned int>(
                             std::stoi(tokens[5]));
 
-
                     ep.m_title = tokens[6];
-
                     ep.m_summary = tokens[7];
-
-
                     show->m_episodes.push_back(ep);
-
                     return;
                 }
             }
@@ -166,12 +150,12 @@ namespace seneca
         // get the avg length in seconds of the episode
         //MUST accomplish this using STL Algorithms and NO manual loops
         // The lambda expression should not capture anything from the context by reference
-        double getEpisodeAverageLength() const:
+        double getEpisodeAverageLength() const;
 
         //create a list with episode names that are at least 1 hour long
         //MUST accomplish this using STL Algorithms and NO manual loops
         // The lambda expression should not capture anything from the context by reference
-        std::list<std::string> getLongEpisodes() const 
+        std::list<std::string> getLongEpisodes() const; 
 
     };
 }

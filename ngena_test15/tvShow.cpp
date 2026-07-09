@@ -18,7 +18,7 @@ namespace seneca
     * m_id, title, year of release, the summary, m_episods
     ******************************************************/
     TvShow::TvShow(
-      const std::string& id;
+      const std::string& id,
       const std::string& title,
       unsigned short year,
       const std::string& summary
@@ -155,7 +155,7 @@ namespace seneca
     // Must use STL algorithms
     //no manual loops
     //lambda should not capture anything from the contest by reference
-    double TvShow::getEpsiodeAverageLength() const
+    double TvShow::getEpisodeAverageLength() const
     {
       if (m_episode.empty())
          return 0;

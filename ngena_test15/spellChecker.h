@@ -51,7 +51,7 @@ namespace seneca {
     *    BAD_WORD: CNT replacements<endl>
     * where BAD_WORD is to be printed on a field of size 15
     *********************************************/
-    void showStatistics(std::ostream out) const;
+    void showStatistics(std::ostream& out) const;
   };
 
 }
