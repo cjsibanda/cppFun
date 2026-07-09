@@ -1,6 +1,7 @@
 #ifndef SENECA_MOVIE_H
 #define SENECA_MOVIE_H
 
+#include "mediaItem.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -32,7 +33,7 @@ namespace seneca
         /*******************************************************
         * override this function to print info about single book
         ********************************************************/     
-        void display(std::ostream& out) const override;
+        void display(std::ostream& out) const; //override?
 
         /****************************************
         * a class function that receives as a parameter
@@ -41,7 +42,7 @@ namespace seneca
         * using information from the string and returns it to
         * the client.
         ******************************************/
-        static Movie* createItem(const std::string& strMovie)
+        static Movie* createItem(const std::string& strMovie);
      
     };
 

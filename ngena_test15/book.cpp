@@ -108,7 +108,7 @@ namespace seneca {
     * -- std::stoi()
     * -- std::stod()
     *******************************************************/
-    Book::Book* createItem(const std::string& strBook) 
+    Book* Book::createItem(const std::string& strBook) 
     {
       if (strBook.empty() || strBook[0] == '#')
             throw "Not a valid book.";

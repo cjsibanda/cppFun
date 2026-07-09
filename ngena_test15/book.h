@@ -45,9 +45,9 @@ namespace seneca
         * from books.csv. line should have the following format
         * *** AUTHOR,TITLE,COUNTRY,PRICE,YEAR,SUMMARY ***
         ************************************************/
-       static Book* createItem(const std::string& strBook)
+       static Book* createItem(const std::string& strBook);
 
-    }
+    };
 
 }
 #endif

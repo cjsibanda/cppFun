@@ -7,6 +7,7 @@
 
 #include "movie.h"
 #include "settings.h"
+#include "mediaItem.h"
 
 namespace seneca 
 {

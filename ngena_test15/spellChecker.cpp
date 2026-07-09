@@ -1,4 +1,5 @@
-#include "spellCheker.h"
+#include "spellChecker.h"
+#include "mediaItem.h"
 
 namespace seneca
 {

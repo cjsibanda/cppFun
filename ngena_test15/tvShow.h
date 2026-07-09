@@ -1,13 +1,14 @@
 #ifndef SENECA_TVSHOW_H
 #define SENECA_TVSHOW_H
 
+#include "mediaItem.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <list>
 #include <numeric>
 
-#include "medialtem.h"
+
 
 namespace seneca 
 {
