@@ -104,16 +104,13 @@ namespace seneca
            throw "Not a valid show.";
 
         std::string tokens[4];
-
         size_t start = 0;
         size_t end = 0;
 
         for (int i = 0; i < 3; i++)
         {
           end = strShow.find(',', start);
-
-          token[i] = strShow.substr(start, end - start);
-
+          tokens[i] = strShow.substr(start, end - start);
           trim(tokens[i]);
           start = end + 1;
         }
@@ -126,12 +123,10 @@ namespace seneca
           tokens[0],
           tokens[1],
           static_cast<unsigned short>(
-              std::stoi(token[2])
+              std::stoi(tokens[2])
           ),
           tokens[3]
         );
-
-
     }
 
     /*************************************************
@@ -157,12 +152,12 @@ namespace seneca
     //lambda should not capture anything from the contest by reference
     double TvShow::getEpisodeAverageLength() const
     {
-      if (m_episode.empty())
+      if (m_episodes.empty())
          return 0;
       
       unsigned int total = std::accumulate(
         m_episodes.begin(),
-        m_episode.end(),
+        m_episodes.end(),
         0u,
         [](unsigned int sum, const TvEpisode& ep)
         {
@@ -178,6 +173,18 @@ namespace seneca
     * get list with episode names that are at least 1 our long
     ********************************************************/
     std::list<std::string> TvShow::getLongEpisodes() const
+    {
+      std::list<std::string> longEpisodes;
+      //1 hour = 3600 seconds
+      std::for_each(m_episodes.begin(), m_episodes.end(),
+                    [&longEpisodes](const TvEpisode& ep){
+                      if (ep.m_length >= 3600) {
+                        longEpisodes.push_back(ep.m_title);
+                      }
+                    }
+    );
+    return longEpisodes;
+    }
 
 
 
