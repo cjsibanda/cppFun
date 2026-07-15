@@ -92,7 +92,9 @@ namespace seneca
 	// Save the data into a file with filename held by the argument `target_file`.
 	// Also, read the workshop instruction.
 
-
+    /********************************************************
+    * Write the definition of the operator class
+    *********************************************************/
 
 
 }
