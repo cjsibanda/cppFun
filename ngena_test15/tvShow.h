@@ -10,9 +10,9 @@
 
 
 
-namespace seneca 
+namespace seneca
 {
-    class TvShow; //<-- forwared declaration so compiler knwows it exist
+    class TvShow; //<-- forward declaration so compiler knwows it exist
     //inside or outside class?
         struct TvEpisode
         {
@@ -44,7 +44,7 @@ namespace seneca
             unsigned short year,
             const std::string& summary
         );
-        
+
         //add necessary constructors
         //constructors are private
     public:
@@ -64,7 +64,7 @@ namespace seneca
 
         /*************************************************************
         * a class function that function builds an episode with the
-        * information from the string, searches in the collection for 
+        * information from the string, searches in the collection for
         * a TV show with the specified id, and adds it to the list of
         * episodes of the found show.
         ***************************************************************/
@@ -129,9 +129,18 @@ namespace seneca
                             std::stoi(tokens[3]));
 
                     ep.m_airDate = tokens[4];
-                    ep.m_length =
-                        static_cast<unsigned int>(
-                            std::stoi(tokens[5]));
+
+                    //convert HH::MM::SS into seconds
+                    std::string length = tokens[5];
+
+                    //Handle possible bad formatting like 00:29:58
+                    std::replace(length.begin(), length.end(), '.', ':');
+
+                    unsigned int hours = std::stoi(length.substr(0, 2));
+                    unsigned int minutes = std::stoi(length.substr(3,2));
+                    unsigned int seconds = std::stoi(length.substr(6,2));
+
+                    ep.m_length = (hours * 3600) + (minutes * 60) + seconds;
 
                     ep.m_title = tokens[6];
                     ep.m_summary = tokens[7];
@@ -155,7 +164,7 @@ namespace seneca
         //create a list with episode names that are at least 1 hour long
         //MUST accomplish this using STL Algorithms and NO manual loops
         // The lambda expression should not capture anything from the context by reference
-        std::list<std::string> getLongEpisodes() const; 
+        std::list<std::string> getLongEpisodes() const;
 
     };
 }
