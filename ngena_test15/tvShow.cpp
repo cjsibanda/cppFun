@@ -26,11 +26,11 @@ namespace seneca
       : MediaItem(title, summary, year),
       m_id(id)
      {
-     } 
+     }
 
     /*****************************************************
     * override this function to print the information
-    * about a single book 
+    * about a single book
     *****************************************************/
     void TvShow::display(std::ostream& out) const
     {
@@ -87,10 +87,10 @@ namespace seneca
     }
 
     /****************************************************
-    * a class function that receives as parameter the 
+    * a class function that receives as parameter the
     * representation of the TV Show as a string and
     * builds a dynamically allocated object of type TvShow
-    * using the information from the string and returns it 
+    * using the information from the string and returns it
     * to the client. The parameter contains a single line of
     * text extracted from the file tvShows.csv
     * The format is the following:
@@ -133,16 +133,16 @@ namespace seneca
     * a class function that function builds an episode
     *  with the information from the string, searches in
     *  the collection for a TV show with the specified
-    *  id, and adds it to the list of episodes of the 
+    *  id, and adds it to the list of episodes of the
     * found show. The string parameter contains a single
-    *  line of text extracted from the file episodes.csv 
+    *  line of text extracted from the file episodes.csv
     * Output should have this format:
     * ID,EPISODE_NUMBER,SEASON_NUMBER,EPISODE_IN_SEASON,AIR_DATE,LENGTH,TITLE,SUMMARY
     ***************************************************/
     template<typename Collection_t>
     void addEpisode(Collection_t& col, const std::string& strEpisode)
     {
-      ////
+      ////<--- this is done in the header file (tvShow.h)
 
     }
 
@@ -152,9 +152,10 @@ namespace seneca
     //lambda should not capture anything from the contest by reference
     double TvShow::getEpisodeAverageLength() const
     {
+
       if (m_episodes.empty())
          return 0;
-      
+
       unsigned int total = std::accumulate(
         m_episodes.begin(),
         m_episodes.end(),
@@ -171,21 +172,21 @@ namespace seneca
 
     /*******************************************************
     * get list with episode names that are at least 1 our long
+    * accumulate() takes the initial list and appends it
+    * The lambda captures nothing []
+    * copy_if() + tranform() possible ??
     ********************************************************/
     std::list<std::string> TvShow::getLongEpisodes() const
     {
-      std::list<std::string> longEpisodes;
-      //1 hour = 3600 seconds
-      std::for_each(m_episodes.begin(), m_episodes.end(),
-                    [&longEpisodes](const TvEpisode& ep){
-                      if (ep.m_length >= 3600) {
-                        longEpisodes.push_back(ep.m_title);
-                      }
-                    }
-    );
-    return longEpisodes;
-    }
-
+      return std::accumulate(m_episodes.begin(), m_episodes.end(), std::list<std::string>{},
+          [](std::list<std::string> acc, const TvEpisode& ep) {
+              if (ep.m_length >= 3600) {
+                  acc.push_back(ep.m_title);
+              }
+              return acc;
+          }
+       );
+     }
 
 
 }
