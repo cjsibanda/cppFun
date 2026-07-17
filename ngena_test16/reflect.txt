@@ -1,3 +1,24 @@
+- what is a task
+- what is latency?
+- what is the notion of problem size?
+- what is time and space?
+- what is the difference between compiled program and executable files
+- what is meant by "spawing a child thread"?
+- what is a synchronization point?
+- what is std::execution::sequenced_policy?
+- what is std::execution::parrallel_policy?
+- what is std::execution::parralel_unsequenced_policy?
+- what does this do?...
+double s = std::reduce(std::execution::seq, x.begin(), x.end());
+- what is the difference between a thread being joinable & non-joinable?
+- what is a race condition?
+- What is a future object?
+- what is a shared state?
+- what is std::promise?
+- what is std::packaged_task?
+- what is std::async()
+- 
+
 ------------------------------------------
 Was there any benefit of using binary files in this exercices?
 --------------------------------------------------------------
