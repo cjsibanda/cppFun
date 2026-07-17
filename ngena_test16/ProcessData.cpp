@@ -54,8 +54,22 @@ namespace seneca
 		//         into variables "total_items" and "data". Don't forget to allocate
 		//         memory for "data".
 		//       The file is binary and has the format described in the specs.
+		std::ifstream file(filename, std::ios::in | std::ios::binary);
+		if (!file)
+		{
+			throw std::string("Cannot open file: " + filename);
+		}
 
+		//-->Read total_items (first 4 bytes)
+		file.read(reinterpret_cast<char*>(&total_items), sizeof(total_items));
 
+		//Allocate the memory for dynamic data block
+		data = new int[total_items];
+
+		//Read the dataset values into data array
+		file.read(reinterpret_cast<char*>(data), total_items * sizeof(int));
+
+		file.close();
 
 
 		std::cout << "Item's count in file '"<< filename << "': " << total_items << std::endl;
@@ -92,9 +106,93 @@ namespace seneca
 	// Save the data into a file with filename held by the argument `target_file`.
 	// Also, read the workshop instruction.
 
-    /********************************************************
-    * Write the definition of the operator class
-    *********************************************************/
+    //--> Implementing operator() using std::thread and std::bind
+	int ProcessData::operator()(const std::string& target_file, double& avg, double& var){
+		///////////////////////////////////////////////////////
+		//-> part 1: Compute averages with Mulit-Threading 
+		///////////////////////////////////////////////////////
+		std::vector<std::thread> avgThreads;
+
+		for (int i = 0; i < num_threads; ++i) {
+			//--> figure out current partision bounds
+			int start_idx = p_indices[i];
+			int size = p_indices[i + 1] - start_idx;
+
+			//Bind computeAvgFactor 3rd parameter (divisor) to total_items
+			// pass placeholder values for parameters 
+			auto boundAvgFunc = std::bind(computeAvgFactor,
+			 std::placeholders::_1,
+			 std::placeholders::_2,
+		     total_items,
+	         std::placeholders::_3);
+
+			 //Spawn the thread passing bound calculation
+			 avgThreads.push_back(std::thread(boundAvgFunc, &data[start_idx], size, std::ref(averages[i])));
+		}
+
+		//--> Synchronize htread executions
+		for (auto& th : avgThreads){
+			th.join();
+		}
+
+		//Accumulate individual factor averages to get global average
+		avg = 0.0;
+		for (int i = 0; i < num_threads; ++i) 
+		{
+			avg += averages[i];
+		}
+
+		/////////////////////////////////////////////////////
+		// Part 2 : Computing Variances with Multi-Threading
+        //////////////////////////////////////////////////////
+		std::vector<std::thread> varThreads;
+
+		for (int i = 0; i < num_threads; ++i) 
+		{
+			int start_idx = p_indices[i];
+			int size = p_indices[i + 1] - start_idx;
+
+			//Bind divisor (total_items) and computed average (avg) to computeVarFactor
+			auto boundVarfunc = std::bind(computeVarFactor,
+			std::placeholders::_1, std::placeholders::_2, total_items, avg, std::placeholders::_3);
+
+			//spawn variance computation thread
+			varThreads.push_back(std::thread(boundVarFunc, &data[start_idx], size, std::ref(variances[i])));
+
+		}
+
+		//Synchronize threads
+		for (auto& th : varThreads)
+		{
+			th.join();
+		}
+
+		//Accumulate individual variance factors to get total variance
+		var = 0.0;
+		for (int i = 0; i < num_threads; ++i) 
+		{
+			var += variances[i];
+		}
+
+		////////////////////////////////////////////////////////
+		// Part 3: Save results to target file in binary format
+		/////////////////////////////////////////////////////////
+		std::ofstream file(target_file, std::ios::out | std::ios::binary);
+		if (!file) 
+		{
+			throw std::string("Cannot open the target file for writing: " + target_file);
+		}
+
+		//Write first 4 bytes representing item count
+		file.write(reinterpret_cast<const char*>(&total_items), sizeof(total_items));
+
+		//Write dataset array contents sequentially
+		file.write(reinterpret_cast<const char*>(data), total_items * sizeof(int));
+
+		file.close();
+
+		return total_items;
+	}
 
 
 }
