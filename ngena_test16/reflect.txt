@@ -22,15 +22,33 @@ double s = std::reduce(std::execution::seq, x.begin(), x.end());
 ------------------------------------------
 Was there any benefit of using binary files in this exercices?
 --------------------------------------------------------------
+-> In general... binary files have:
+-faster processing and i/o speeds
+- smaller file sizes
+- better data intefrity
+
 
 --------------------------------------------------------
 why would be important to bind a function to its arguments,
  and how was it useful in this exercise?
  --------------------------------------------------------
-
+-> in general binding functions to arguments:
+- allows you to pre-fill one or more parameters of a function
+- creates reusable factories
+- simplifies callbacks
+- improves code readability
+- enables function composition
 
  -----------------------------------------------------------
 the advantages of using multiple threads, and how did you
  accomplis multi-threading in this exercise?
  -----------------------------------------------------------
+- it maximises harware efficiency and improves application responsiveness
+- higher performance
+- better responsiveness
+- effiecient resource sharing
+- optimized througput: Reduces idle CPU time by switching tasks when one thread
+- Modular Architecture - breaks complex software systems down into smaller, independently managed tasks
+
+
 
