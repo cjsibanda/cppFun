@@ -113,9 +113,7 @@ namespace seneca {
       if (strBook.empty() || strBook[0] == '#')
             throw "Not a valid book.";
 
-
         std::string tokens[6];
-
         size_t start = 0;
         size_t end = 0;
 
@@ -123,12 +121,9 @@ namespace seneca {
         for (int i = 0; i < 5; i++)
         {
             end = strBook.find(',', start);
-
             tokens[i] =
                 strBook.substr(start, end - start);
-
             trim(tokens[i]);
-
             start = end + 1;
         }
 
