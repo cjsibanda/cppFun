@@ -109,13 +109,11 @@ namespace seneca
                 if (show &&
                     show->m_id == tokens[0])
                 {
-
                     TvEpisode ep;
                     ep.m_show = show;
                     ep.m_numberOverall =
                         static_cast<unsigned short>(
                             std::stoi(tokens[1]));
-
                     ep.m_season =
                         tokens[2].empty()
                         ?
