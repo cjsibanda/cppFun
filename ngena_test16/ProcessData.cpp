@@ -157,7 +157,7 @@ namespace seneca
 			std::placeholders::_1, std::placeholders::_2, total_items, avg, std::placeholders::_3);
 
 			//spawn variance computation thread
-			varThreads.push_back(std::thread(boundVarFunc, &data[start_idx], size, std::ref(variances[i])));
+			varThreads.push_back(std::thread(boundVarfunc, &data[start_idx], size, std::ref(variances[i])));
 
 		}
 
