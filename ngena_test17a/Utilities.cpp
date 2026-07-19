@@ -1,14 +1,15 @@
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <algorithm>
-#include <numeric>
+#include <stdexcept>
+#include "Utilities.h"
 
-#include "utilities.h"
 
 namespace seneca
 {
-    //constructors???
+    /******************************************************
+    * separates the tokens in any given 
+    * std::string object. All Utilities objects in the
+    * system share the same delimiter. 
+    ******************************************************/
+    char Utilities::m_delimiter = ',';
 
     /*********************************************************************
         * extracts a token from string str referred to
@@ -28,23 +29,51 @@ namespace seneca
         * NOTE: in this application: str represents a single line that
         * has been read from an input file
         **************************************************************************/
-       std::string Utilities::extractToken(const std::string& str, size_t& next_pos, bool& more)
-       {
-         //
-       }
+        std::string Utilities::extractToken(const std::string& str, size_t& next_pos, bool& more)
+    {
+        if (next_pos >= str.length()) {
+            more = false;
+            return "";
+        }
 
-       //CLASS FUNCTIONS...
+        // Exception check: if delimiter is directly at next_pos
+        if (str[next_pos] == m_delimiter) {
+            more = false;
+            throw std::runtime_error("No token found at index.");
+        }
 
-       //sets the delimiter for this class to the character received
-       static void Utilites::setDelimiter(char newDelimiter)
-       {
-         //
-       }
+        size_t delim_pos = str.find(m_delimiter, next_pos);
+        std::string token;
 
-       //returns the delimiter for this class
-       static char Utilies::getDelimiter()
-       {
-        //
-       }
+        if (delim_pos == std::string::npos) {
+            token = str.substr(next_pos);
+            next_pos = str.length();
+            more = false;
+        } else {
+            token = str.substr(next_pos, delim_pos - next_pos);
+            next_pos = delim_pos + 1;
+            more = true;
+        }
+
+        // Manual whitespace trimming (front and back)
+        size_t first = token.find_first_not_of(" \t\r\n");
+        if (first == std::string::npos) {
+            token = "";
+        } else {
+            size_t last = token.find_last_not_of(" \t\r\n");
+            token = token.substr(first, (last - first + 1));
+        }
+
+        // Update the instance field width if this token is larger
+        if (token.length() > m_widthField) {
+            m_widthField = token.length();
+        }
+
+        return token;
+    }
+
+    //Class Function in Header file
+       
+       
 
 }

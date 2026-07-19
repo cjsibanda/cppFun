@@ -11,17 +11,17 @@
 namespace seneca
 {
 
-    class Collection
+    class Utilities
     {
-        int m_widthField{1}; //instance variable
-        //m_delimiter ()
-
+        size_t m_widthField{1};
+        static char m_delimiter;
+    public:
         //sets the field width of the current object to
         //... to the value of parameter newWidth
-        void setFieldWidth(size_t newWidth)
+        void setFieldWidth(size_t newWidth) {m_widthField = newWidth; }
 
         //returns the field width of the current object
-        size_t getFieldWidth() const 
+        size_t getFieldWidth() const { return m_widthField; } 
 
         /*********************************************************************
         * extracts a token from string str referred to
@@ -41,17 +41,17 @@ namespace seneca
         * NOTE: in this application: str represents a single line that
         * has been read from an input file
         **************************************************************************/
-       std::string extractToken(const std::string& str, size_t& next_pos, bool& more)
+       std::string extractToken(const std::string& str, size_t& next_pos, bool& more);
 
        //CLASS FUNCTIONS...
 
        //sets the delimiter for this class to the character received
-       static void setDelimiter(char newDelimiter);
+       static void setDelimiter(char newDelimiter) { m_delimiter = newDelimiter; }
 
        //returns the delimiter for this class
-       static char getDelimiter()
+       static char getDelimiter() { return m_delimiter; }
 
         
-    }
+    };
 }
 #endif
