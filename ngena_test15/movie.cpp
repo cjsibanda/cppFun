@@ -79,30 +79,21 @@ namespace seneca
         if (strMovie.empty() || strMovie[0] == '#')
             throw "Not a valid movie.";
 
-
         std::string title;
         std::string year;
         std::string summary;
 
-
         size_t first = strMovie.find(',');
         size_t second = strMovie.find(',', first + 1);
-
-
         title = strMovie.substr(0, first);
-
         year = strMovie.substr(
             first + 1,
             second - first - 1
         );
-
         summary = strMovie.substr(second + 1);
-
-
         trim(title);
         trim(year);
         trim(summary);
-
 
         return new Movie(
             title,
