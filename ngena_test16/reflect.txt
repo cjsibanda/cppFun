@@ -1,31 +1,67 @@
 - what is a task
+---> A task is a unit of work that a program needs to complete.
 - what is latency?
+---> the time delay between requesting an operation and receiving a response.
 - what is the notion of problem size?
+---> the amount of data or work a program must process.
 - what is time and space?
+---> Time refers to how long a program takes to complete a task (execution time).
+---> Space refers to how much memory a program requires while running.
 - what is the difference between compiled program and executable files
+---> A compiled program is source code that has been translated by the compiler into machine code.
+---> An executable file is the final file produced by compilation that the operating system can run.
 - what is meant by "spawing a child thread"?
+---> Spawning a child thread means creating a new thread from an existing thread.
 - what is a synchronization point?
+---> A synchronization point is a place where threads coordinate their execution.
+--->It ensures one operation happens before another operation continues
 - what is std::execution::sequenced_policy?
+---> means an algorithm runs sequentially.
+---> Only one operation happens at a time.
 - what is std::execution::parrallel_policy?
+---> allows an algorithm to execute operations in parallel.
+---> Multiple threads may be used.
 - what is std::execution::parralel_unsequenced_policy?
+---> allows both parallel execution & vectorized execution (multiple CPU instructions at once)
 - what does this do?...
 double s = std::reduce(std::execution::seq, x.begin(), x.end());
+---> it adds all elements inside the container x, then uses sequential execution and stores the result in variable s
 - what is the difference between a thread being joinable & non-joinable?
+---> A joinable thread is an object that represents an active thread of execution
+---> It can be synchronized using join()
+
+---> a non-joinable thread object is a thread that no longer represents an active thread
+---> This happens after t.join();
+
 - what is a race condition?
+---> this coccurs when multiple threads access shared data at the same time and the results depends on execution order. This causes unpredictable results.
+
 - What is a future object?
+---> It represents a value that will become available later. It allows one thread to retrieve a result produced by another thread. retrieved using futur.get()
+
 - what is a shared state?
+--> This is memory shared between a provider and a future. Provider places a result into the shared state and the future retrieves that result.
+
 - what is std::promise?
+---> It is a provider that allows a thread to manually set a value for a future.
+it writes the result into a shared state
+
+
 - what is std::packaged_task?
+---> it wrapes a function and automatically stores its return value into a shared state.
+A future can later retrieve the result.
+
 - what is std::async()
-- 
+- it runs a function asynchronously and returns a future. The function executes separately and the reullt become availbale later
 
 ------------------------------------------
 Was there any benefit of using binary files in this exercices?
 --------------------------------------------------------------
 -> In general... binary files have:
--faster processing and i/o speeds
-- smaller file sizes
-- better data intefrity
+-faster processing and i/o speeds (binary data does NOT need text conversion)
+- smaller file sizes ()
+- better data integrity (Binary preserves exact memory representation, no formatting changes occur)
+- 
 
 
 --------------------------------------------------------
@@ -39,6 +75,11 @@ why would be important to bind a function to its arguments,
 - improves code readability
 - enables function composition
 
+---> In this exercise, The function computeAvgFactor() needed these array, size, divisor, average.. but each thread only needed to supply array, size, average. The divisor was always: total_items... so std::bind() stored divisor = total_items and created a thread-friendly function.
+
+
+
+
  -----------------------------------------------------------
 the advantages of using multiple threads, and how did you
  accomplis multi-threading in this exercise?
@@ -49,6 +90,10 @@ the advantages of using multiple threads, and how did you
 - effiecient resource sharing
 - optimized througput: Reduces idle CPU time by switching tasks when one thread
 - Modular Architecture - breaks complex software systems down into smaller, independently managed tasks
+
+---> In this program we divided the data into sections: p_indices... then created worked threads [std::thread], then each thread calculated a partial result [averages[i] and variances[i] ] , the waited for completion [ join() ]... then the results were combined 
+[ avg += averages[i], var += variances[i]]... this design avoids race conditions because threads work independently and only the main thread combines the final results. 
+
 
 
 
