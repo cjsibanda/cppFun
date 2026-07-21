@@ -16,7 +16,7 @@ namespace seneca
               size_t m_serialNumber{0};
               bool m_isFilled{false};
               Item(const std::string& src) : m_itemName{src} {}; 
-           }
+           };
     /********************************************************
     * CustomerOrder contains all the functionality for
     * processing customer orders as they move from Station
