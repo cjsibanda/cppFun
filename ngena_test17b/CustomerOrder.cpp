@@ -139,7 +139,7 @@ namespace seneca
     void CustomerOrder::fillItem(Station& station, std::ostream& os)
     {
         for (size_t i = 0; i < m_cntItem; ++i) {
-            if (m_listItem[i]->m_itemName == station.getItemName() && !m_lstItem[i]->m_isFilled) {
+            if (m_listItem[i]->m_itemName == station.getItemName() && !m_listItem[i]->m_isFilled) {
                 if (station.getQuantity() > 0) {
                     station.updateQuantity();
                     m_lstItem[i]->m_serialNumber = station.getNextSerialNumber();
