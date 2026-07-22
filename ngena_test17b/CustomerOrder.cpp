@@ -66,9 +66,9 @@ namespace seneca
             // Clean up existing resources
             if (m_listItem) {
                 for (size_t i = 0; i < m_cntItem; ++i) {
-                    delete m_lstItem[i];
+                    delete m_listItem[i];
                 }
-                delete[] m_lstItem;
+                delete[] m_listItem;
             }
 
             // Steal state from other
@@ -89,9 +89,9 @@ namespace seneca
     {
         if (m_listItem) {
             for (size_t i = 0; i < m_cntItem; ++i) {
-                delete m_lstItem[i];
+                delete m_listItem[i];
             }
-            delete[] m_lstItem;
+            delete[] m_listItem;
         }
     }
 
