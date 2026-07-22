@@ -142,12 +142,12 @@ namespace seneca
             if (m_listItem[i]->m_itemName == station.getItemName() && !m_listItem[i]->m_isFilled) {
                 if (station.getQuantity() > 0) {
                     station.updateQuantity();
-                    m_lstItem[i]->m_serialNumber = station.getNextSerialNumber();
-                    m_lstItem[i]->m_isFilled = true;
-                    os << "    Filled " << m_name << ", " << m_product << " [" << m_lstItem[i]->m_itemName << "]\n";
+                    m_listItem[i]->m_serialNumber = station.getNextSerialNumber();
+                    m_listItem[i]->m_isFilled = true;
+                    os << "    Filled " << m_name << ", " << m_product << " [" << m_listItem[i]->m_itemName << "]\n";
                     break; // Fill ONLY ONE item per station call
                 } else {
-                    os << "    Unable to fill " << m_name << ", " << m_product << " [" << m_lstItem[i]->m_itemName << "]\n";
+                    os << "    Unable to fill " << m_name << ", " << m_product << " [" << m_listItem[i]->m_itemName << "]\n";
                 }
             }
         }
