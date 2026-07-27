@@ -23,7 +23,7 @@ namespace seneca
         //The collection of
         // workstations for current assembly line
         ///////////////////////////////////////////////
-        std::vector<WorkStation*> m_activeLine;
+        std::vector<Workstation*> m_activeLine;
 
         size_t m_cntCustomerOrder; //the total number of customer objects
 
@@ -52,7 +52,7 @@ namespace seneca
         * file records (one while loop); DO NOT USE for, while or do-while loops
         * except for iterating the file records
         *************************************************************************************/
-        LineManager(const std::string&file, const std::vector<WorkStation*>& stations);
+        LineManager(const std::string&file, const std::vector<Workstation*>& stations);
 
         /***************************************************************
         * This modifier reorders the workstations present in the instance
