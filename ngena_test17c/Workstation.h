@@ -63,14 +63,14 @@ namespace seneca
         * the order is moved into g_completed or g_incomplete queue
         * - if an order has been moved, return true; false otherwise
         *************************************************************/
-        bool attemptToMoveOrder()
+        bool attemptToMoveOrder();
 
         //---------------------------------------------------------------
         // this modifier stores the address if the referenced WorkStation
         // object in the pointer to the m_pNextStation. Parameter default
         // to nullptr
         //---------------------------------------------------------------
-        void setNextStation(WorkStation* station)
+        void setNextStation(WorkStation* station);
 
         //this query returns the address of the next WorkStation
         Workstation* getNextStation() const;
