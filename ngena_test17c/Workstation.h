@@ -84,12 +84,12 @@ namespace seneca
         * ITEM_NAME --> End of Line
         * -- in either case, the message is terminate with \n
         ********************************************************/
-        void display(std::ostream& os) const
+        void display(std::ostream& os) const;
 
         //this moves the CustomerOrder reference in parameter
         // newOrder to the back of the queue
-        Workstation& operator+=(Customer&& newOrder);
-    }
+        Workstation& operator+=(CustomerOrder&& newOrder);
+    };
 
 }
 #endif
