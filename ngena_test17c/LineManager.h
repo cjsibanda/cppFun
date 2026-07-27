@@ -14,7 +14,7 @@ namespace seneca
     * The LineManager class manages an assmbly line of active
     * stations
     *********************************************************/
-    class Workstation
+    class LineManager
     { 
         
         //instance variables: 
