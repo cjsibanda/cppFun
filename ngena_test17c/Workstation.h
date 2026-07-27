@@ -70,7 +70,7 @@ namespace seneca
         // object in the pointer to the m_pNextStation. Parameter default
         // to nullptr
         //---------------------------------------------------------------
-        void setNextStation(WorkStation* station);
+        void setNextStation(Workstation* station);
 
         //this query returns the address of the next WorkStation
         Workstation* getNextStation() const;
@@ -88,7 +88,7 @@ namespace seneca
 
         //this moves the CustomerOrder reference in parameter
         // newOrder to the back of the queue
-        WorkStation& operator+=(Customer&& newOrder);
+        Workstation& operator+=(Customer&& newOrder);
     }
 
 }

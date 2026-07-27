@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <thread>
-#include "WorkStation.h"
+#include "Workstation.h"
 
 namespace seneca
 {
@@ -25,7 +25,7 @@ namespace seneca
     * the order is moved into g_completed or g_incomplete queue
     * - if an order has been moved, return true; false otherwise
     *************************************************************/
-    bool WorkStation::attemptToMoveOrder()
+    bool Workstation::attemptToMoveOrder()
     {
         //
     }
@@ -35,7 +35,7 @@ namespace seneca
     // object in the pointer to the m_pNextStation. Parameter default
     // to nullptr
     //---------------------------------------------------------------
-    void WorkStation::setNextStation(WorkStation* station)
+    void Workstation::setNextStation(WorkStation* station)
     {
        //
     }
@@ -52,14 +52,14 @@ namespace seneca
     * ITEM_NAME --> End of Line
     * -- in either case, the message is terminate with \n
     ********************************************************/
-    void WorkStation::display(std::ostream& os) const
+    void Workstation::display(std::ostream& os) const
     {
        //
     }
 
     //this moves the CustomerOrder reference in parameter
     // newOrder to the back of the queue
-    WorkStation& WorkStation::operator+=(Customer&& newOrder)
+    Workstation& Workstation::operator+=(Customer&& newOrder)
     {
         //
     }
