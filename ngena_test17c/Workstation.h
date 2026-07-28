@@ -3,31 +3,41 @@
 
 #include <string>
 #include <iostream>
+#include <deque>
+
+#include "Station.h"
 #include "CustomerOrder.h"
 
-/***********************************************************
-* global variables - 3 double-ended queues of CustomerOrder
-* - g_pending - holds the orders to be placed onto the assembly line
-* at the first station 
-* - g_completed - holds the orders that have been removed from the last
-station and have been completely filled
-* - g_incomplete - holds the orders that have been removed from the last station
-* and could be filled completely 
-* - g_incomple holds the orders that have been removed from the last station
-* and could ne filled completely
-****************************************************************/
 
 namespace seneca 
 {
+
+    /***********************************************************
+    * global variables - 3 double-ended queues of CustomerOrder
+    * - g_pending - holds the orders to be placed onto the assembly line
+    * at the first station 
+    * - g_completed - holds the orders that have been removed from the last
+    *  station and have been completely filled
+    * - g_incomplete - holds the orders that have been removed from the last station
+    * and could be filled completely 
+    * - g_incomple holds the orders that have been removed from the last station
+    * and could ne filled completely
+    ****************************************************************/
+    extern std::deque<CustomerOrder> g_pending;
+    extern std::deque<CustomerOrder> g_completed;
+    extern std::deque<CustomerOrder> g_incomplete;
+
+
     /*******************************************
     * The workstation class defines the structure
     * of an active station on assembly line.
     * Each Workstation is-a-kind-of Station.
     * Workstation object cannot be copied or moved
     ***********************************************/
-    class Workstation
+    class Workstation : public Station
     { 
         
+    
         //instance variables: 
         /*******************************************************
         * m_orders is a double-ended-queue with CustomerOrders 
@@ -35,10 +45,10 @@ namespace seneca
         * that have been placed on this station to receive service
         * (or already received service)
         ********************************************************/
-        double  m_orders;
+        std::deque<CustomerOrder> m_orders;    
 
         //m_pNextStation - a pointer to the next Workstation on the assembly line
-        Workstation* m_pNextStation;
+        Workstation* m_pNextStation{ nullptr };
 
         //Member Functions
 
@@ -47,7 +57,17 @@ namespace seneca
         * an unmodifiable reference to std::string and passes it to
         * the Station base class
         *************************************************************/
-        Workstation(std::string& Station);
+      public:
+        //Workstation(std::string& Station);
+        Workstation(const std::string& record);
+        
+        //copy & move ops disabled
+        Workstation(const Workstation&);
+        Workstation& operator=(const Workstation&) = delete;
+
+        Workstation(Workstation&&) = delete;
+        Workstation& operator=(Workstation&&) = delete;
+        
 
         //modifier that fills the order at the front of the queue if
         //there are CustomerOrders in the queue: otherwise, does nothing

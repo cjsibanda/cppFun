@@ -3,7 +3,9 @@
 
 #include <string>
 #include <iostream>
-#include "CustomerOrder.h"
+#include <vector>
+#include <fstream>
+#include <algorithm>
 #include "Workstation.h"
 
 
@@ -25,11 +27,12 @@ namespace seneca
         ///////////////////////////////////////////////
         std::vector<Workstation*> m_activeLine;
 
-        size_t m_cntCustomerOrder; //the total number of customer objects
+        size_t m_cntCustomerOrder{0}; //the total number of customer objects
 
         //points to the first active station on the current line
-        Workstation* m_firstStation;
+        Workstation* m_firstStation{nullptr};
 
+    public:
         //Member functions...
 
         /************************************************************************************
@@ -52,7 +55,9 @@ namespace seneca
         * file records (one while loop); DO NOT USE for, while or do-while loops
         * except for iterating the file records
         *************************************************************************************/
-        LineManager(const std::string&file, const std::vector<Workstation*>& stations);
+        LineManager(const std::string& file,
+                    const std::vector<Workstation*>& stations
+                );
 
         /***************************************************************
         * This modifier reorders the workstations present in the instance
@@ -79,7 +84,7 @@ namespace seneca
        * return true if all customer orders have been filled or cannot be filled,
        * otherwise returns false
        ***********************************************************/
-      bool run(std::ostream);
+      bool run(std::ostream& os);
 
       //this query all active stations on the assembly line
       //in their current order

@@ -1,18 +1,30 @@
 #include <iostream>
-#include <fstream>
-#include <functional>
 #include <string>
-#include <vector>
-#include <thread>
+#include <utility>
 #include "Workstation.h"
 
 namespace seneca
 {
+
+    //global queues
+    std::deque<CustomerOrder> g_pending;
+    std::deque<CustomerOrder> g_completed;
+    std::deque<CustomerOrder> g_incomplete;
+
+    Workstation::Workstation(const std::string& record)
+       : Station(record)
+    {
+
+    }
+
     //modifier that fills the order at the front of the queue if
     //there are CustomerOrders in the queue: otherwise, does nothing
     void Workstation::fill(std::ostream& os)
     {
-       //
+       if (!m_orders.empty())
+       {
+        m_orders.front().fillItem(*this, os);
+       }
     }
 
     /*********************************************************
@@ -27,7 +39,37 @@ namespace seneca
     *************************************************************/
     bool Workstation::attemptToMoveOrder()
     {
-        //
+        if (m_orders.empty())
+        {
+            return false;
+        }        
+
+        bool moved = false;
+        CustomerOrder& order = m_orders.front();
+
+        //If orders is complete for station OR cannot be filled
+        if (order.isItemFilled(getItemName()) || getQuantity() == 0)
+        {
+            if (m_pNextStation)
+            {
+                *m_pNextStation += std::move(order);
+            }
+            else{
+                if (order.isOrderFilled())
+                {
+                    g_completed.push_back(std::move(order));
+                }
+                else
+                {
+                   g_incomplete.push_back(std::move(order));
+                }
+            }
+
+            m_orders.pop_front();
+            moved = true;
+        }
+
+        return moved;
     }
 
     //---------------------------------------------------------------
@@ -35,13 +77,16 @@ namespace seneca
     // object in the pointer to the m_pNextStation. Parameter default
     // to nullptr
     //---------------------------------------------------------------
-    void Workstation::setNextStation(WorkStation* station)
+    void Workstation::setNextStation(Workstation* station)
     {
-       //
+       m_pNextStation = station;
     }
 
     //this query returns the address of the next WorkStation
-    Workstation* getNextStation() const;
+    Workstation* Workstation::getNextStation() const
+    {
+       return m_pNextStation;
+    }
 
     /*******************************************************
     * this query inserts the name of the Item for which the 
@@ -54,13 +99,28 @@ namespace seneca
     ********************************************************/
     void Workstation::display(std::ostream& os) const
     {
-       //
+        os << getItemName()
+           << " --> ";
+
+
+        if (m_pNextStation)
+        {
+            os << m_pNextStation->getItemName();
+        }
+        else
+        {
+            os << "End of Line";
+        }
+
+
+        os << std::endl;
     }
 
     //this moves the CustomerOrder reference in parameter
     // newOrder to the back of the queue
-    Workstation& Workstation::operator+=(Customer&& newOrder)
+    Workstation& Workstation::operator+=(CustomerOrder&& newOrder)
     {
-        //
+        m_orders.push_back(std::move(newOrder));
+        return *this;
     }
 }
