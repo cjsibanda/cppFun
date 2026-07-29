@@ -40,6 +40,7 @@ namespace seneca
 
 		virtual void display(std::ostream& out = std::cout) const = 0;
 
+		
 		template<typename Functor_t>
 		void fixSpelling(Functor_t& spellChecker)
 		{
