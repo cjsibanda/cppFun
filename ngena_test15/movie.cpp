@@ -26,7 +26,6 @@ namespace seneca
     {
     }
 
-
     //override this function
     //to print the info about a single book
     void Movie::display(std::ostream& out) const
@@ -103,3 +102,4 @@ namespace seneca
     }
 
 }
+

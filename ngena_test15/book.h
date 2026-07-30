@@ -16,6 +16,7 @@ namespace seneca
     ****************************************************/
     class Book : public MediaItem
     {
+        
         std::string m_author{};
         std::string m_country{};
         double m_price{};
